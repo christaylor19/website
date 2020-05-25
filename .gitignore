@@ -1,0 +1,11 @@
+# NPM Modules
+/node_modules
+
+# Next.js directory
+/.next
+
+# Task List
+TODO.md
+
+#Mac Stuff
+.DS_Store
