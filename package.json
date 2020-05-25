@@ -1,7 +1,7 @@
 {
-  "name": "next-ts-template",
+  "name": "christ-dev",
   "version": "0.0.1",
-  "description": "private template repository for next js projects",
+  "description": "personal website",
   "main": "index.js",
   "scripts": {
     "dev": "next",
@@ -13,14 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/christaylor19/next-ts-template.git"
+    "url": "git+https://github.com/christaylor19/websitee.git"
   },
   "author": "christaylor19",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/christaylor19/next-ts-template/issues"
-  },
-  "homepage": "https://github.com/christaylor19/next-ts-template#readme",
   "dependencies": {
     "next": "^9.3.6",
     "react": "^16.13.1",
