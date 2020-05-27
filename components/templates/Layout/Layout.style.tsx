@@ -14,6 +14,7 @@ export const Menu = styled.ul`
   list-style: none;
   word-break: keep-all;
   overflow-x: auto;
+  align-items: center;
 `;
 
 export const MenuItem = styled.li`

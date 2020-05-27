@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import Link from 'next/link';
+import { TiHome } from 'react-icons/ti';
 import { theme } from '../../../config/theme';
 import { MenuItem, Nav, Menu, Footer, Main, NavLink } from './Layout.style';
 import GithubIcon from '../../atoms/GithubIcon';
@@ -17,10 +18,12 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
       <ThemeProvider theme={theme}>
         <header>
           <Nav>
-            <Menu>
+            <Menu style={{ paddingLeft: '16px' }}>
               <MenuItem>
                 <Link href="/" passHref>
-                  <NavLink>home</NavLink>
+                  <NavLink>
+                    <TiHome size="2em" />
+                  </NavLink>
                 </Link>
               </MenuItem>
               <MenuItem>
@@ -49,7 +52,7 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
                 </Link>
               </MenuItem>
             </Menu>
-            <Menu>
+            <Menu style={{ paddingRight: '16px' }}>
               <MenuItem>
                 <NavLink href="https://github.com/christaylor19">
                   <span>
