@@ -2,8 +2,10 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import Link from 'next/link';
 import { TiHome } from 'react-icons/ti';
+import guled from 'guled';
+
 import { theme } from '../../../config/theme';
-import { MenuItem, Nav, Menu, Footer, Main, NavLink } from './Layout.style';
+import { MenuItem, Nav, Menu, Footer, Main, NavLink, Small } from './Layout.style';
 import GithubIcon from '../../atoms/GithubIcon';
 import TwitterIcon from '../../atoms/TwitterIcon';
 import LinkedInIcon from '../../atoms/LinkedInIcon';
@@ -82,6 +84,7 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
           <span>
             © 2020 <NavLink href="https://christ.dev/">Chris Taylor</NavLink>
           </span>
+          <Small>{guled()}</Small>
         </Footer>
       </ThemeProvider>
       <style jsx global>

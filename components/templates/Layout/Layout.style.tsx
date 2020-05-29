@@ -44,3 +44,7 @@ export const NavLink = styled.a`
   text-decoration: none;
   color: #000;
 `;
+
+export const Small = styled.span`
+  font-size: 2px;
+`;
