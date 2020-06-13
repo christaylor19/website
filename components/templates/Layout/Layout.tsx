@@ -1,14 +1,15 @@
-import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import Link from 'next/link';
-import { TiHome } from 'react-icons/ti';
 import guled from 'guled';
+import Head from 'next/head';
+import Link from 'next/link';
+import React from 'react';
+import { TiHome } from 'react-icons/ti';
+import { ThemeProvider } from 'styled-components';
 
 import { theme } from '../../../config/theme';
-import { MenuItem, Nav, Menu, Footer, Main, NavLink, Small } from './Layout.style';
 import GithubIcon from '../../atoms/GithubIcon';
-import TwitterIcon from '../../atoms/TwitterIcon';
 import LinkedInIcon from '../../atoms/LinkedInIcon';
+import TwitterIcon from '../../atoms/TwitterIcon';
+import { Footer, Main, Menu, MenuItem, Nav, NavLink, Small } from './Layout.style';
 
 interface Props {
   children: React.ReactNode;
@@ -18,6 +19,11 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
   return (
     <>
       <ThemeProvider theme={theme}>
+        <Head>
+          <title>Christ</title>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <link rel="preload" href="/fonts/CascadiaCode.woff2" as="font" type="font/woff2" />
+        </Head>
         <header>
           <Nav>
             <Menu style={{ paddingLeft: '16px' }}>
@@ -84,7 +90,6 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
           <span>
             © 2020 <NavLink href="https://christ.dev/">Chris Taylor</NavLink>
           </span>
-          <Small>{guled()}</Small>
         </Footer>
       </ThemeProvider>
       <style jsx global>
@@ -93,8 +98,13 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
             box-sizing: border-box;
           }
           body {
-            font-family: 'Roboto', sans-serif, 'Arial';
+            font-family: Cascadia, sans-serif, 'Arial';
             margin: 0;
+          }
+          @font-face {
+            font-family: Cascadia;
+            src: url('fonts/CascadiaCode.woff2');
+            font-display: swap;
           }
         `}
       </style>
