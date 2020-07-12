@@ -1,4 +1,3 @@
-import guled from 'guled';
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
@@ -24,73 +23,107 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
           <link rel="preload" href="/fonts/CascadiaCode.woff2" as="font" type="font/woff2" />
         </Head>
-        <header>
-          <Nav>
-            <Menu style={{ paddingLeft: '16px' }}>
-              <MenuItem>
-                <Link href="/" passHref>
-                  <NavLink>
-                    <TiHome size="2em" />
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+          <header>
+            <Nav>
+              <Menu
+                style={{
+                  marginRight: 8,
+                  padding: '8px 16px',
+                  backgroundColor: '#07003c',
+                  borderRadius: 12,
+                  border: '4px solid #F1B170',
+                }}
+              >
+                <MenuItem>
+                  <Link href="/" passHref>
+                    <NavLink>
+                      <TiHome size="2em" />
+                    </NavLink>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href="/me" passHref>
+                    <NavLink>who</NavLink>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href="/about" passHref>
+                    <NavLink>what</NavLink>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href="/why" passHref>
+                    <NavLink>why</NavLink>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href="/geo" passHref>
+                    <NavLink>where</NavLink>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href="/uses" passHref>
+                    <NavLink>how</NavLink>
+                  </Link>
+                </MenuItem>
+              </Menu>
+              <Menu
+                style={{
+                  marginRight: 8,
+                  padding: '8px 16px',
+                  backgroundColor: '#07003c',
+                  borderRadius: 12,
+                  border: '4px solid #F1B170',
+                }}
+              >
+                <MenuItem>
+                  <NavLink href="https://github.com/christaylor19">
+                    <span>
+                      <GithubIcon />
+                    </span>
                   </NavLink>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/me" passHref>
-                  <NavLink>who</NavLink>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/about" passHref>
-                  <NavLink>what</NavLink>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/why" passHref>
-                  <NavLink>why</NavLink>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/geo" passHref>
-                  <NavLink>where</NavLink>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/uses" passHref>
-                  <NavLink>how</NavLink>
-                </Link>
-              </MenuItem>
-            </Menu>
-            <Menu style={{ paddingRight: '16px' }}>
-              <MenuItem>
-                <NavLink href="https://github.com/christaylor19">
-                  <span>
-                    <GithubIcon />
-                  </span>
-                </NavLink>
-              </MenuItem>
-              <MenuItem>
-                <NavLink href="https://twitter.com/ChrisTaylor94_">
-                  <span>
-                    <TwitterIcon />
-                  </span>
-                </NavLink>
-              </MenuItem>
-              <MenuItem>
-                <NavLink href="https://www.linkedin.com/in/chris-taylor-b50703a7/">
-                  <span>
-                    <LinkedInIcon />
-                  </span>
-                </NavLink>
-              </MenuItem>
-            </Menu>
-          </Nav>
-        </header>
-        <Main>{children}</Main>
-        <Footer>
-          <span>
-            © 2020 <NavLink href="https://christ.dev/">Chris Taylor</NavLink>
-          </span>
-        </Footer>
+                </MenuItem>
+                <MenuItem>
+                  <NavLink href="https://twitter.com/ChrisTaylor94_">
+                    <span>
+                      <TwitterIcon />
+                    </span>
+                  </NavLink>
+                </MenuItem>
+                <MenuItem>
+                  <NavLink href="https://www.linkedin.com/in/chris-taylor-b50703a7/">
+                    <span>
+                      <LinkedInIcon />
+                    </span>
+                  </NavLink>
+                </MenuItem>
+              </Menu>
+            </Nav>
+          </header>
+          <Main>{children}</Main>
+          <Footer>
+            <span>
+              © 2020 <NavLink href="https://christ.dev/">Chris Taylor</NavLink>
+            </span>
+            <span>
+              {'Background by '}
+              <a
+                style={{
+                  textDecoration: 'none',
+                  fontFamily: "Cascadia, sans-serif, 'Arial'",
+                  color: '#fff',
+                  border: '1px solid #fff',
+                  borderRadius: 5,
+                  padding: 1,
+                }}
+                href="https://products.ls.graphics/paaatterns/index.html"
+              >
+                {'paaatterns'}
+              </a>
+            </span>
+          </Footer>
+        </div>
       </ThemeProvider>
       <style jsx global>
         {`
@@ -100,6 +133,9 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
           body {
             font-family: Cascadia, sans-serif, 'Arial';
             margin: 0;
+            background-image: url(/images/Whangaehu.svg);
+            background-color: #07003c;
+            color: #fff;
           }
           @font-face {
             font-family: Cascadia;
