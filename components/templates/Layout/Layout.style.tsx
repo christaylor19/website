@@ -45,7 +45,7 @@ export const Footer = styled.footer`
   min-height: 2vh;
   width: 100%;
   background-color: #07003c;
-  border-top: 2px solid #f1b170;
+  border-top: 4px solid #f1b170;
 `;
 
 export const NavLink = styled.a`
