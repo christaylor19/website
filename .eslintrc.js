@@ -49,5 +49,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/prop-types': 'off',
     'jest/expect-expect': 'off',
+    'react/no-danger': 'off',
+    'jsx-a11y/html-has-lang': 'off',
   },
 };
