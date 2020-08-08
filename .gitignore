@@ -9,3 +9,9 @@ TODO.md
 
 #Mac Stuff
 .DS_Store
+
+# Env
+.env.*
+.env
+/.mocks
+
