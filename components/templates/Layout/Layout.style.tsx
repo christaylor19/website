@@ -48,8 +48,12 @@ export const Footer = styled.footer`
   border-top: 4px solid #f1b170;
 `;
 
-export const NavLink = styled.a`
-  text-decoration: none;
+type INavLink = {
+  active: boolean;
+};
+
+export const NavLink = styled.a<INavLink>`
+  text-decoration: ${({ active }) => (active ? 'underline' : 'none')};
   color: #fff;
   outline: 2pd dashed #fff;
 `;

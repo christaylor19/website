@@ -12,9 +12,10 @@ import { Footer, Main, Menu, MenuItem, Nav, NavLink, Small } from './Layout.styl
 
 interface Props {
   children: React.ReactNode;
+  pathname: string;
 }
 
-const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
+const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => {
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -24,7 +25,7 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
           <link rel="preload" href="/fonts/CascadiaCode.woff2" as="font" type="font/woff2" />
         </Head>
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-          <header>
+          <header style={{ padding: '0 10px' }}>
             <Nav>
               <Menu
                 style={{
@@ -37,34 +38,34 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
               >
                 <MenuItem>
                   <Link href="/" passHref>
-                    <NavLink>
+                    <NavLink active={pathname === '/'}>
                       <TiHome size="2em" />
                     </NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
                   <Link href="/me" passHref>
-                    <NavLink>who</NavLink>
+                    <NavLink active={pathname === '/me'}>who</NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
                   <Link href="/about" passHref>
-                    <NavLink>what</NavLink>
+                    <NavLink active={pathname === '/about'}>what</NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
                   <Link href="/why" passHref>
-                    <NavLink>why</NavLink>
+                    <NavLink active={pathname === '/why'}>why</NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
                   <Link href="/geo" passHref>
-                    <NavLink>where</NavLink>
+                    <NavLink active={pathname === '/geo'}>where</NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
                   <Link href="/uses" passHref>
-                    <NavLink>how</NavLink>
+                    <NavLink active={pathname === '/uses'}>how</NavLink>
                   </Link>
                 </MenuItem>
               </Menu>
@@ -78,21 +79,21 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
                 }}
               >
                 <MenuItem>
-                  <NavLink href="https://github.com/christaylor19">
+                  <NavLink active={false} href="https://github.com/christaylor19">
                     <span>
                       <GithubIcon />
                     </span>
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink href="https://twitter.com/ChrisTaylor94_">
+                  <NavLink active={false} href="https://twitter.com/ChrisTaylor94_">
                     <span>
                       <TwitterIcon />
                     </span>
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink href="https://www.linkedin.com/in/chris-taylor-b50703a7/">
+                  <NavLink active={false} href="https://www.linkedin.com/in/chris-taylor-b50703a7/">
                     <span>
                       <LinkedInIcon />
                     </span>
@@ -104,7 +105,10 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
           <Main>{children}</Main>
           <Footer>
             <span>
-              © 2020 <NavLink href="https://christ.dev/">Chris Taylor</NavLink>
+              {'© 2020 '}
+              <NavLink active={false} href="https://christ.dev/">
+                {'Chris Taylor'}
+              </NavLink>
             </span>
             <span>
               {'Background by '}
@@ -133,7 +137,7 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
           body {
             font-family: Cascadia, sans-serif, 'Arial';
             margin: 0;
-            background-image: url(/images/Whangaehu.svg);
+            // background-image: url(/images/Whangaehu.svg);
             background-color: #07003c;
             color: #fff;
           }

@@ -1,11 +1,13 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import Layout from '../components/templates/Layout';
 
 const Why = () => {
+  const router = useRouter();
   return (
     <>
-      <Layout>
+      <Layout pathname={router.pathname}>
         <div
           style={{
             marginRight: 8,
