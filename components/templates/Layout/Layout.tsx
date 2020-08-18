@@ -19,7 +19,7 @@ const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
     <>
       <ThemeProvider theme={theme}>
         <Head>
-          <title>Christ</title>
+          <title>{'Chris Taylor Codes'}</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
           <link rel="preload" href="/fonts/CascadiaCode.woff2" as="font" type="font/woff2" />
         </Head>
