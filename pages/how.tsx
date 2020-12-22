@@ -3,7 +3,7 @@ import React from 'react';
 
 import Layout from '../components/templates/Layout';
 
-const Me = () => {
+const Uses = () => {
   const router = useRouter();
   return (
     <>
@@ -12,16 +12,17 @@ const Me = () => {
           style={{
             marginRight: 8,
             padding: '8px 16px',
-            backgroundColor: '#07003c',
+            backgroundColor: '#fff',
             borderRadius: 12,
-            border: '4px solid #F1B170',
+            border: '4px solid #000',
+            color: '#000',
           }}
         >
-          hi
+          shit expensive technology probably
         </div>
       </Layout>
     </>
   );
 };
 
-export default Me;
+export default Uses;

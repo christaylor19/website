@@ -12,9 +12,10 @@ const Why = () => {
           style={{
             marginRight: 8,
             padding: '8px 16px',
-            backgroundColor: '#07003c',
+            backgroundColor: '#fff',
             borderRadius: 12,
-            border: '4px solid #F1B170',
+            border: '4px solid #000',
+            color: '#000',
           }}
         >
           also asking this question

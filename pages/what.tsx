@@ -3,7 +3,7 @@ import React from 'react';
 
 import Layout from '../components/templates/Layout';
 
-const Geo = () => {
+const About = () => {
   const router = useRouter();
   return (
     <>
@@ -12,16 +12,17 @@ const Geo = () => {
           style={{
             marginRight: 8,
             padding: '8px 16px',
-            backgroundColor: '#07003c',
+            backgroundColor: '#fff',
+            color: '#000',
             borderRadius: 12,
-            border: '4px solid #F1B170',
+            border: '4px solid #000',
           }}
         >
-          what
+          this website was designed at 2am
         </div>
       </Layout>
     </>
   );
 };
 
-export default Geo;
+export default About;

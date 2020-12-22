@@ -8,7 +8,7 @@ import { theme } from '../../../config/theme';
 import GithubIcon from '../../atoms/GithubIcon';
 import LinkedInIcon from '../../atoms/LinkedInIcon';
 import TwitterIcon from '../../atoms/TwitterIcon';
-import { Footer, Main, Menu, MenuItem, Nav, NavLink, Small } from './Layout.style';
+import { Footer, Main, Menu, MenuItem, Nav, NavLink } from './Layout.style';
 
 interface Props {
   children: React.ReactNode;
@@ -31,41 +31,50 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
                 style={{
                   marginRight: 8,
                   padding: '8px 16px',
-                  backgroundColor: '#07003c',
                   borderRadius: 12,
-                  border: '4px solid #F1B170',
+                  border: '4px solid black',
                 }}
               >
                 <MenuItem>
                   <Link href="/" passHref>
                     <NavLink active={pathname === '/'}>
-                      <TiHome size="2em" />
+                      <TiHome size="2em" style={{ color: 'black' }} />
                     </NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link href="/me" passHref>
-                    <NavLink active={pathname === '/me'}>who</NavLink>
+                  <Link href="/who" passHref>
+                    <NavLink active={pathname === '/who'} style={{ color: 'black' }}>
+                      who
+                    </NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link href="/about" passHref>
-                    <NavLink active={pathname === '/about'}>what</NavLink>
+                  <Link href="/what" passHref>
+                    <NavLink active={pathname === '/what'} style={{ color: 'black' }}>
+                      what
+                    </NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
                   <Link href="/why" passHref>
-                    <NavLink active={pathname === '/why'}>why</NavLink>
+                    <NavLink active={pathname === '/why'} style={{ color: 'black' }}>
+                      why
+                    </NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link href="/geo" passHref>
-                    <NavLink active={pathname === '/geo'}>where</NavLink>
+                  <Link href="/where" passHref>
+                    <NavLink active={pathname === '/where'} style={{ color: 'black' }}>
+                      where
+                    </NavLink>
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link href="/uses" passHref>
-                    <NavLink active={pathname === '/uses'}>how</NavLink>
+                  <Link href="/how" passHref>
+                    <NavLink active={pathname === '/how'} style={{ color: 'black' }}>
+                      how
+                    </NavLink>
                   </Link>
                 </MenuItem>
               </Menu>
@@ -73,9 +82,8 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
                 style={{
                   marginRight: 8,
                   padding: '8px 16px',
-                  backgroundColor: '#07003c',
                   borderRadius: 12,
-                  border: '4px solid #F1B170',
+                  border: '4px solid black',
                 }}
               >
                 <MenuItem>
@@ -110,22 +118,6 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
                 {'Chris Taylor'}
               </NavLink>
             </span>
-            <span>
-              {'Background by '}
-              <a
-                style={{
-                  textDecoration: 'none',
-                  fontFamily: "Cascadia, sans-serif, 'Arial'",
-                  color: '#fff',
-                  border: '1px solid #fff',
-                  borderRadius: 5,
-                  padding: 1,
-                }}
-                href="https://products.ls.graphics/paaatterns/index.html"
-              >
-                {'paaatterns'}
-              </a>
-            </span>
           </Footer>
         </div>
       </ThemeProvider>
@@ -137,8 +129,6 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
           body {
             font-family: Cascadia, sans-serif, 'Arial';
             margin: 0;
-            // background-image: url(/images/Whangaehu.svg);
-            background-color: #07003c;
             color: #fff;
           }
           @font-face {

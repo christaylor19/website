@@ -44,8 +44,7 @@ export const Footer = styled.footer`
   padding: 8px;
   min-height: 2vh;
   width: 100%;
-  background-color: #07003c;
-  border-top: 4px solid #f1b170;
+  border-top: 2px dashed #000;
 `;
 
 type INavLink = {
@@ -54,8 +53,7 @@ type INavLink = {
 
 export const NavLink = styled.a<INavLink>`
   text-decoration: ${({ active }) => (active ? 'underline' : 'none')};
-  color: #fff;
-  outline: 2pd dashed #fff;
+  color: #000;
 `;
 
 export const Small = styled.span`
