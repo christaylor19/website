@@ -11,8 +11,14 @@ const NavLink: React.FC<Props> = ({ displayName, pathname, href }) => {
   return (
     <>
       <Link href={href} passHref>
-        <a className={`text-sm ${href === pathname ? 'text-gray-900' : 'text-gray-400'}`}>
-          <span className="font-semibold">{displayName.toUpperCase()}</span>
+        <a
+          className={`text-sm ${
+            href === pathname
+              ? 'text-gray-900 dark:text-gray-100'
+              : 'text-gray-400 dark:text-gray-400 '
+          }`}
+        >
+          <span className="font-semibold ">{displayName.toUpperCase()}</span>
         </a>
       </Link>
     </>

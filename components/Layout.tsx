@@ -6,7 +6,6 @@ import {
   AiOutlineMail as EmailIcon,
   AiOutlineTwitter as TwitterIcon,
 } from 'react-icons/ai';
-import { TiHome } from 'react-icons/ti';
 
 import NavLink from './NavLink';
 
@@ -28,7 +27,7 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
           <nav className="h-40 mt-8">
             <ul className="flex flex-row items-center  break-all py-2 px-4 list-none w-full">
               <li className="mx-2 p-0">
-                <span className="text-gray-800 font-semibold no-underline text-xl">
+                <span className="text-gray-800 dark:text-gray-200  font-semibold no-underline text-xl">
                   {'CHRIS TAYLOR'}
                 </span>
               </li>
@@ -36,19 +35,19 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
               <li className="mx-2 p-0">
                 <NavLink displayName="home" pathname={pathname} href="/" />
               </li>
-              <li className="mx-2 p-0">
+              <li className="px-2  border-l-2 border-gray-400 dark:border-blue-900 leading-4">
                 <NavLink displayName="who" pathname={pathname} href="/who" />
               </li>
-              <li className="mx-2 p-0">
+              <li className="px-2 p-0 border-l-2 border-gray-400 dark:border-blue-900 leading-4">
                 <NavLink displayName="what" pathname={pathname} href="/what" />
               </li>
-              <li className="mx-2 p-0">
+              <li className="px-2  border-l-2 border-gray-400 dark:border-blue-900 leading-4">
                 <NavLink displayName="why" pathname={pathname} href="/why" />
               </li>
-              <li className="mx-2 p-0">
+              <li className="px-2  border-l-2 border-gray-400 dark:border-blue-900 leading-4">
                 <NavLink displayName="where" pathname={pathname} href="/where" />
               </li>
-              <li className="mx-2 p-0">
+              <li className="px-2  border-l-2 border-gray-400 dark:border-blue-900 leading-4">
                 <NavLink displayName="how" pathname={pathname} href="/how" />
               </li>
               <li className="mx-2 p-0">
@@ -74,35 +73,9 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
             </ul>
           </nav>
         </header>
-        <main
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            padding: 10,
-            textAlign: 'center',
-            flexGrow: 2,
-          }}
-        >
-          {children}
-        </main>
-        <footer
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            fontSize: 12,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            lineHeight: '24px',
-            padding: 8,
-            minHeight: '2vh',
-            width: '100%',
-          }}
-        >
-          <span style={{ color: 'black' }}>
+        <main className="mx-auto relative w-full h-full p-6 text-center flex-grow">{children}</main>
+        <footer className="mx-auto text-sm flex flex-row justify-center items-center leading-6	p-4 min-h-2 w-full">
+          <span className="text-gray-900 dark:text-gray-100 text-md">
             {'© 2020 '}
             <a href="https://christ.dev/">{'Chris Taylor'}</a>
           </span>
@@ -116,7 +89,6 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
           body {
             font-family: Varela, Roboto, sans-serif, 'Arial';
             margin: 0;
-            color: #fff;
           }
           @font-face {
             font-family: Varela;

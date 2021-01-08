@@ -2,24 +2,16 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import Layout from '../components/Layout';
+import Page from '../components/Page';
 
 const Home = () => {
   const router = useRouter();
   return (
     <>
       <Layout pathname={router.pathname}>
-        <div
-          style={{
-            marginRight: 8,
-            padding: '8px 16px',
-            backgroundColor: '#fff',
-            borderRadius: 12,
-            color: '#000',
-            border: '4px solid #000',
-          }}
-        >
-          Content Soon
-        </div>
+        <Page title="Hello World">
+          <>{'Content Soon'}</>
+        </Page>
       </Layout>
     </>
   );
