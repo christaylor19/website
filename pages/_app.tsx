@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
 import * as gtag from '../utils/gtag';
+import '../styles/index.css';
 
 const App = ({ Component, pageProps }) => {
   React.useEffect(() => {
