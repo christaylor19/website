@@ -7,6 +7,7 @@ import {
   AiOutlineMail as EmailIcon,
   AiOutlineTwitter as TwitterIcon,
 } from 'react-icons/ai';
+import { HiMenu } from 'react-icons/hi';
 
 import pages from '../data/pages';
 import NavLink from './NavLink';
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
   return (
     <>
       <Head>
@@ -24,10 +27,10 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="preload" href="/fonts/CascadiaCode.woff2" as="font" type="font/woff2" />
       </Head>
-      <div className="flex flex-col h-screen xs:px-4 sm:px-4 md:px-10 lg:px-96">
-        <header className="xs:px-0 sm:px-0 md:px-2 px-20">
-          <nav className="h-40 mt-8">
-            <ul className="flex flex-row items-center  break-all py-2 px-4 list-none w-full">
+      <div className="flex flex-col h-screen">
+        <header>
+          <nav className="flex flex-row items-center justify-center mt-8 ">
+            <ul className="flex flex-row items-center break-all py-2 px-4 list-none w-full md:max-w-3xl lg:max-w-4xl xl:max-w-6xl">
               <li className="mx-2 p-0">
                 <span className="text-gray-800 dark:text-gray-200  font-semibold no-underline text-xl">
                   {'CHRIS TAYLOR'}
@@ -37,31 +40,91 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
                 <NavLink displayName="home" pathname={pathname} href="/" />
               </li>
               {pages.map((page) => (
-                <li className="px-2 border-l-2 border-gray-400 dark:border-blue-900 leading-4">
+                <li className="xxs:hidden md:block px-2 border-l-2 border-gray-400 dark:border-blue-900 leading-4">
                   <NavLink displayName={page.headerName} pathname={pathname} href={page.href} />
                 </li>
               ))}
-
               <li className="flex-grow" />
-              <li className="mx-2 p-0">
+              <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
                 <a href="https://github.com/christaylor19">
-                  <GithubIcon size="1.2em" className="text-gray-600" />
+                  <GithubIcon className="text-gray-500 hover:text-gray-900 h-5 w-5 " />
                 </a>
               </li>
-              <li className="mx-2 p-0">
+              <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
                 <a href="https://twitter.com/1.2em">
-                  <TwitterIcon size="1.2em" className="text-gray-600" />
+                  <TwitterIcon className="text-gray-500 hover:text-gray-900 h-5 w-5 " />
                 </a>
               </li>
-              <li className="mx-2 p-0">
+              <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
                 <a href="https://www.linkedin.com/in/chris-taylor-b50703a7/">
-                  <LinkedInIcon size="1.2em" className="text-gray-600" />
+                  <LinkedInIcon className="text-gray-600 hover:text-gray-900 h-5 w-5 " />
                 </a>
               </li>
-              <li className="mx-2 p-0 ">
+              <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
                 <a href="mailto:christaylor94.dev@gmail.com">
-                  <EmailIcon size="1.2em" className="text-gray-600" />
+                  <EmailIcon className="text-gray-500 hover:text-gray-900 h-5 w-5  " />
                 </a>
+              </li>
+              <li className="relative mx-2 p-0 lg:hidden">
+                <HiMenu
+                  className="text-gray-500 cursor-pointer hover:text-gray-900 h-5 w-5 "
+                  onClick={() => setMenuOpen(!menuOpen)}
+                />
+                {menuOpen && (
+                  <div className="absolute pt-2 text-right right-0 z-10">
+                    <ul className="flex flex-col border-r-2 border-gray-400 dark:border-blue-900">
+                      {pages.map((page) => (
+                        <li className="xs:block sm:block md:hidden px-2  leading-4">
+                          <NavLink
+                            displayName={page.headerName}
+                            pathname={pathname}
+                            href={page.href}
+                          />
+                        </li>
+                      ))}
+                      <li className="mx-2 p-0 ">
+                        <a href="https://github.com/christaylor19">
+                          <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
+                            <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
+                              {'GITHUB'}
+                            </span>
+                            <GithubIcon size="1em" className="text-gray-500" />
+                          </div>
+                        </a>
+                      </li>
+                      <li className="mx-2 p-0 ">
+                        <a href="https://twitter.com/1.2em">
+                          <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
+                            <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
+                              {'TWITTER'}
+                            </span>
+                            <TwitterIcon size="1em" className="text-gray-500" />
+                          </div>
+                        </a>
+                      </li>
+                      <li className="mx-2 p-0 ">
+                        <a href="https://www.linkedin.com/in/chris-taylor-b50703a7/">
+                          <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
+                            <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
+                              {'LINKEDIN'}
+                            </span>
+                            <LinkedInIcon size="1em" className="text-gray-500" />
+                          </div>
+                        </a>
+                      </li>
+                      <li className="mx-2 p-0  ">
+                        <a href="mailto:christaylor94.dev@gmail.com">
+                          <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
+                            <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
+                              {'EMAIL'}
+                            </span>
+                            <EmailIcon size="1em" className="text-gray-500" />
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </li>
             </ul>
           </nav>
