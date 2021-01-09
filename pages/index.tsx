@@ -1,17 +1,17 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import Container from '../components/Container';
 import Layout from '../components/Layout';
-import Page from '../components/Page';
 
 const Home = () => {
   const router = useRouter();
   return (
     <>
       <Layout pathname={router.pathname}>
-        <Page title="Hello World">
+        <Container title="Hello World">
           <>{'Content Soon'}</>
-        </Page>
+        </Container>
       </Layout>
     </>
   );

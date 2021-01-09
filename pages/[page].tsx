@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import Container from '../components/Container';
 import Layout from '../components/Layout';
-import Page from '../components/Page';
 import pages from '../data/pages';
 
-const Why = () => {
+const Page = () => {
   const {
     query: { page: queryPage },
     pathname,
@@ -15,12 +15,12 @@ const Why = () => {
   return (
     <>
       <Layout pathname={pathname}>
-        <Page title={page.title} subtitle={page.subtitle}>
+        <Container title={page.title} subtitle={page.subtitle}>
           <>{page.content}</>
-        </Page>
+        </Container>
       </Layout>
     </>
   );
 };
 
-export default Why;
+export default Page;

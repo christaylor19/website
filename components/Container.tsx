@@ -6,7 +6,7 @@ interface Props {
   children: JSX.Element;
 }
 
-const Page: React.FC<Props> = ({ title, subtitle, children }) => {
+const Container: React.FC<Props> = ({ title, subtitle, children }) => {
   return (
     <>
       <div className="flex flex-col text-gray-500 dark:text-gray-300 items-start">
@@ -18,4 +18,4 @@ const Page: React.FC<Props> = ({ title, subtitle, children }) => {
   );
 };
 
-export default Page;
+export default Container;
