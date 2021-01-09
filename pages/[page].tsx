@@ -4,8 +4,8 @@ import React from 'react';
 
 import Container from '../components/Container';
 import Layout from '../components/Layout';
-import { getAllPages, getPageByName } from '../lib/api';
 import markdownToHtml from '../lib/markdownToHtml';
+import { getAllPages, getPageByName } from '../lib/strapi-api';
 import TPage from '../types/page';
 
 interface Props {

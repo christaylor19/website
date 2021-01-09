@@ -62,7 +62,10 @@ const Layout: React.FC<Props> = ({ children, pathname, pages }): React.ReactElem
                   <div className="absolute pt-2 text-right right-0 z-10">
                     <ul className="flex flex-col border-r-2 border-gray-400 dark:border-blue-900">
                       {pages.map((page) => (
-                        <li className="xs:block sm:block md:hidden px-2  leading-4">
+                        <li
+                          key={`${page.name}_menulink`}
+                          className="xs:block sm:block md:hidden px-2  leading-4"
+                        >
                           <NavLink
                             displayName={page.headerName}
                             pathname={pathname}
