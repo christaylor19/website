@@ -24,8 +24,8 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="preload" href="/fonts/CascadiaCode.woff2" as="font" type="font/woff2" />
       </Head>
-      <div className="flex flex-col h-screen px-96">
-        <header className="px-20">
+      <div className="flex flex-col h-screen xs:px-4 sm:px-4 md:px-10 lg:px-96">
+        <header className="xs:px-0 sm:px-0 md:px-2 px-20">
           <nav className="h-40 mt-8">
             <ul className="flex flex-row items-center  break-all py-2 px-4 list-none w-full">
               <li className="mx-2 p-0">
@@ -58,7 +58,7 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
                   <LinkedInIcon size="1.2em" className="text-gray-600" />
                 </a>
               </li>
-              <li className="mx-2 p-0">
+              <li className="mx-2 p-0 ">
                 <a href="mailto:christaylor94.dev@gmail.com">
                   <EmailIcon size="1.2em" className="text-gray-600" />
                 </a>
