@@ -1,5 +1,6 @@
 export default interface Page {
-  id: string;
+  id?: string;
+  name?: string;
   headerName: string;
   title: string;
   href: string;

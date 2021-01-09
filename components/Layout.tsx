@@ -4,15 +4,16 @@ import React from 'react';
 import { HiMenu } from 'react-icons/hi';
 
 import links from '../data/links';
-import pages from '../data/pages';
+import Page from '../types/page';
 import NavLink from './NavLink';
 
 interface Props {
   children: React.ReactNode;
   pathname: string;
+  pages: Page[];
 }
 
-const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => {
+const Layout: React.FC<Props> = ({ children, pathname, pages }): React.ReactElement => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   return (
