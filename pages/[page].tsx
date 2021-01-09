@@ -14,11 +14,13 @@ const Page = () => {
   const page = pages.find((page) => page.id === queryPage);
   return (
     <>
-      <Layout pathname={pathname}>
-        <Container title={page.title} subtitle={page.subtitle}>
-          <>{page.content}</>
-        </Container>
-      </Layout>
+      {page && (
+        <Layout pathname={pathname}>
+          <Container title={page.title} subtitle={page.subtitle}>
+            <>{page.content}</>
+          </Container>
+        </Layout>
+      )}
     </>
   );
 };
