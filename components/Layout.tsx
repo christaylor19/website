@@ -9,6 +9,7 @@ import {
 } from 'react-icons/ai';
 import { HiMenu } from 'react-icons/hi';
 
+import links from '../data/links';
 import pages from '../data/pages';
 import NavLink from './NavLink';
 
@@ -45,26 +46,13 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
                 </li>
               ))}
               <li className="flex-grow" />
-              <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
-                <a href="https://github.com/christaylor19">
-                  <GithubIcon className="text-gray-500 hover:text-gray-900 h-5 w-5 " />
-                </a>
-              </li>
-              <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
-                <a href="https://twitter.com/1.2em">
-                  <TwitterIcon className="text-gray-500 hover:text-gray-900 h-5 w-5 " />
-                </a>
-              </li>
-              <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
-                <a href="https://www.linkedin.com/in/chris-taylor-b50703a7/">
-                  <LinkedInIcon className="text-gray-600 hover:text-gray-900 h-5 w-5 " />
-                </a>
-              </li>
-              <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
-                <a href="mailto:christaylor94.dev@gmail.com">
-                  <EmailIcon className="text-gray-500 hover:text-gray-900 h-5 w-5  " />
-                </a>
-              </li>
+              {links.map((link) => (
+                <li className="mx-2 p-0 xxs:hidden xs:hidden sm:hidden md:hidden lg:block">
+                  <a href={link.href}>
+                    <link.Icon className="text-gray-500 hover:text-gray-900 h-5 w-5" />
+                  </a>
+                </li>
+              ))}
               <li className="relative mx-2 p-0 lg:hidden">
                 <HiMenu
                   className="text-gray-500 cursor-pointer hover:text-gray-900 h-5 w-5 "
@@ -82,46 +70,18 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
                           />
                         </li>
                       ))}
-                      <li className="mx-2 p-0 ">
-                        <a href="https://github.com/christaylor19">
-                          <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
-                            <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
-                              {'GITHUB'}
-                            </span>
-                            <GithubIcon size="1em" className="text-gray-500" />
-                          </div>
-                        </a>
-                      </li>
-                      <li className="mx-2 p-0 ">
-                        <a href="https://twitter.com/1.2em">
-                          <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
-                            <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
-                              {'TWITTER'}
-                            </span>
-                            <TwitterIcon size="1em" className="text-gray-500" />
-                          </div>
-                        </a>
-                      </li>
-                      <li className="mx-2 p-0 ">
-                        <a href="https://www.linkedin.com/in/chris-taylor-b50703a7/">
-                          <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
-                            <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
-                              {'LINKEDIN'}
-                            </span>
-                            <LinkedInIcon size="1em" className="text-gray-500" />
-                          </div>
-                        </a>
-                      </li>
-                      <li className="mx-2 p-0  ">
-                        <a href="mailto:christaylor94.dev@gmail.com">
-                          <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
-                            <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
-                              {'EMAIL'}
-                            </span>
-                            <EmailIcon size="1em" className="text-gray-500" />
-                          </div>
-                        </a>
-                      </li>
+                      {links.map((link) => (
+                        <li className="mx-2 p-0" key={`${link.id}_menulink`}>
+                          <a href={link.href}>
+                            <div className="flex flex-row items-center justify-end w-24 cursor-pointer">
+                              <span className="font-semibold mr-1 text-gray-400 dark:text-gray-400">
+                                {link.displayName.toUpperCase()}
+                              </span>
+                              <link.Icon className="text-gray-500" />
+                            </div>
+                          </a>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 )}
