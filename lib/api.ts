@@ -1,4 +1,4 @@
-import { IGetAllPages, IGetPageByName } from '../types/api';
+import { IGetAllPages } from '../types/api';
 import Page from '../types/page';
 
 async function fetchAPI(query: string, { variables }: any = {}) {
