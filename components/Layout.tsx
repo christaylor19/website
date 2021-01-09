@@ -1,12 +1,6 @@
 import dayjs from 'dayjs';
 import Head from 'next/head';
 import React from 'react';
-import {
-  AiFillGithub as GithubIcon,
-  AiFillLinkedin as LinkedInIcon,
-  AiOutlineMail as EmailIcon,
-  AiOutlineTwitter as TwitterIcon,
-} from 'react-icons/ai';
 import { HiMenu } from 'react-icons/hi';
 
 import links from '../data/links';
@@ -24,7 +18,12 @@ const Layout: React.FC<Props> = ({ children, pathname }): React.ReactElement => 
   return (
     <>
       <Head>
-        <title>{'Chris Taylor Codes'}</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
+        <link rel="shortcut icon" href="/favicon/favicon.ico" />
+        <title>{'Chris Taylor'}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="preload" href="/fonts/CascadiaCode.woff2" as="font" type="font/woff2" />
       </Head>
