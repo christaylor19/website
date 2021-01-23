@@ -4,8 +4,8 @@ import React from 'react';
 
 import Container from '../components/Container';
 import Layout from '../components/Layout';
-import markdownToHtml from '../lib/markdownToHtml';
-import { getAllPages, getPageByName } from '../lib/strapi-api';
+import RichText from '../components/RichText';
+import { getAllPages, getPageByName } from '../lib/api';
 import TPage from '../types/page';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 const Page: React.FC<Props> = ({ page, allPages }) => {
   const { pathname, isFallback } = useRouter();
 
-  if (!isFallback && !page?.name) {
+  if (!isFallback && !page?.name && false) {
     return <ErrorPage statusCode={404} />;
   }
   return (
@@ -24,7 +24,7 @@ const Page: React.FC<Props> = ({ page, allPages }) => {
       {page && (
         <Layout pathname={pathname} pages={allPages}>
           <Container title={page.title} subtitle={page.subtitle}>
-            <>{page.content}</>
+            <RichText content={page.content} />
           </Container>
         </Layout>
       )}
@@ -34,24 +34,24 @@ const Page: React.FC<Props> = ({ page, allPages }) => {
 
 export async function getStaticProps({ params }) {
   const allPages = await getAllPages();
+  const sd = JSON.parse(JSON.stringify(allPages));
   const currentPage = await getPageByName(params.page);
-  const content = await markdownToHtml(currentPage?.content || '');
 
   return {
     props: {
       page: {
-        ...currentPage,
-        content,
+        ...currentPage[0],
       },
-      allPages: allPages?.pages,
+      allPages: sd,
     },
   };
 }
 
 export async function getStaticPaths() {
   const allPages = await getAllPages();
+  const sd = JSON.parse(JSON.stringify(allPages));
   return {
-    paths: allPages?.pages.map((page) => `/${page.name}`) || [],
+    paths: sd.map((page) => `/${page.href}`) || [],
     fallback: false,
   };
 }

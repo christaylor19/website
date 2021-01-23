@@ -1,7 +1,9 @@
 import Prismic from 'prismic-javascript';
 
-import { IGetAllPages } from '../types/api';
 import Page from '../types/page';
+
+// import { IGetAllPages } from '../types/api';
+// import Page from '../types/page';
 
 const REPOSITORY = process.env.PRISMIC_REPOSITORY_NAME;
 const REF_API_URL = `https://${REPOSITORY}.prismic.io/api/v2`;
@@ -15,7 +17,6 @@ export const PrismicClient = Prismic.client(REF_API_URL, {
 
 async function fetchAPI(query: string, { variables }: any = {}) {
   const prismicAPI = await PrismicClient.getApi();
-
   const res = await fetch(
     `${GRAPHQL_API_URL}?query=${query}&variables=${JSON.stringify(variables)}`,
     {
@@ -34,7 +35,6 @@ async function fetchAPI(query: string, { variables }: any = {}) {
   }
 
   const json = await res.json();
-  console.log('json: ', json);
   if (json.errors) {
     console.error(json.errors);
     throw new Error('Failed to fetch API');
@@ -42,43 +42,73 @@ async function fetchAPI(query: string, { variables }: any = {}) {
   return json.data;
 }
 
-export async function getPageByName(page: string): Promise<Page> {
+const transformData = (d: any) => {
+  const d2: Page = {
+    title: d.node.title[0].text,
+    subtitle: d.node.subtitle[0].text,
+    content: d.node.content[0].text,
+    headerName: d.node.headername,
+    href: d.node._meta.uid,
+  };
+  return d2;
+};
+
+const transformData2 = (d: any) => {
+  const d2: Page = {
+    title: d.node.title[0].text,
+    subtitle: d.node.subtitle[0].text,
+    content: d.node.content,
+    headerName: d.node.headername,
+    href: d.node._meta.uid,
+  };
+  return d2;
+};
+
+export async function getPageByName(page: string): Promise<any> {
   const data = await fetchAPI(
     `
-      query PagesByName($where: JSON) {
-        page(where: $where) {
-          name
-          header_name
+    query{
+      allCpages(uid:"${page}"){
+        edges{
+          node{
+            title
+            subtitle
+            content
+            headername
+            _meta{
+              uid
+              type
+            }
+          }
+        }
+      }
+    }
+    `,
+  );
+  const d3 = data.allCpages.edges.map((i) => transformData2(i));
+  console.log('d3: ', d3);
+  return d3;
+}
+
+export async function getAllPages(): Promise<any> {
+  const data = await fetchAPI(`
+  query{
+    allCpages{
+      edges{
+        node{
           title
           subtitle
           content
-          href
+          headername
+          _meta{
+            uid
+            type
+          }
         }
       }
-    `,
-    {
-      variables: {
-        where: {
-          name: page,
-        },
-      },
-    },
-  );
-  return data?.pages[0];
-}
-
-export async function getAllPages(): Promise<IGetAllPages> {
-  const data = await fetchAPI(`
-    {
-      page{
-        name
-        header_name
-        title
-        subtitle
-        content
-        href
-      }
     }
+  }
   `);
-  return data;
+  const d3 = data.allCpages.edges.map((i) => transformData(i));
+  return d3;
 }

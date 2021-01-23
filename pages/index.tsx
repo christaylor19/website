@@ -3,7 +3,7 @@ import React from 'react';
 
 import Container from '../components/Container';
 import Layout from '../components/Layout';
-import { getAllPages } from '../lib/strapi-api';
+import { getAllPages } from '../lib/api';
 import Page from '../types/page';
 
 interface Props {
@@ -25,8 +25,9 @@ const Home: React.FC<Props> = ({ allPages = [] }) => {
 
 export async function getStaticProps() {
   const data = await getAllPages();
+  const sd = JSON.parse(JSON.stringify(data));
   return {
-    props: { allPages: data?.pages },
+    props: { allPages: sd },
   };
 }
 
