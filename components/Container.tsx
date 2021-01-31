@@ -9,7 +9,7 @@ interface Props {
 const Container: React.FC<Props> = ({ title, subtitle, children }) => {
   return (
     <>
-      <div className="flex flex-col text-gray-500 dark:text-gray-300 items-start">
+      <div className="flex flex-col text-gray-500 dark:text-gray-300 items-start w-full  px-4 ">
         <h1 className="font-bold text-4xl">{title}</h1>
         <h2 className="font-semibold text-2xl">{subtitle}</h2>
         {children}

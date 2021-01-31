@@ -14,6 +14,11 @@ module.exports = {
       padding: {
         '48px': '48px',
       },
+      outline: {
+        blue: '3px solid blue',
+        green: '3px solid green',
+        yellow: '3px solid yellow',
+      },
     },
   },
   variants: {

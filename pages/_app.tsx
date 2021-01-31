@@ -1,7 +1,10 @@
-import React from 'react';
-import Router from 'next/router';
-import * as gtag from '../utils/gtag';
 import '../styles/index.css';
+
+import Router from 'next/router';
+import React from 'react';
+
+import ModeContextProvider from '../context/appContext';
+import * as gtag from '../utils/gtag';
 
 const App = ({ Component, pageProps }) => {
   React.useEffect(() => {
@@ -14,7 +17,11 @@ const App = ({ Component, pageProps }) => {
     };
   }, []);
 
-  return <Component {...pageProps} />;
+  return (
+    <ModeContextProvider>
+      <Component {...pageProps} />
+    </ModeContextProvider>
+  );
 };
 
 export default App;

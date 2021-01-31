@@ -1,59 +1,28 @@
-import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 import Container from '../components/Container';
 import Layout from '../components/Layout';
-import RichText from '../components/RichText';
-import { getAllPages, getPageByName } from '../lib/api';
-import TPage from '../types/page';
+import pages from '../data/pages';
 
-interface Props {
-  page?: TPage;
-  allPages?: TPage[];
-}
+const Page = () => {
+  const {
+    query: { page: queryPage },
+    pathname,
+  } = useRouter();
 
-const Page: React.FC<Props> = ({ page, allPages }) => {
-  const { pathname, isFallback } = useRouter();
-
-  if (!isFallback && !page?.name && false) {
-    return <ErrorPage statusCode={404} />;
-  }
+  const page = pages.find((page) => page.id === queryPage);
   return (
     <>
       {page && (
-        <Layout pathname={pathname} pages={allPages}>
+        <Layout pathname={pathname}>
           <Container title={page.title} subtitle={page.subtitle}>
-            <RichText content={page.content} />
+            <>{page.content}</>
           </Container>
         </Layout>
       )}
     </>
   );
 };
-
-export async function getStaticProps({ params }) {
-  const allPages = await getAllPages();
-  const sd = JSON.parse(JSON.stringify(allPages));
-  const currentPage = await getPageByName(params.page);
-
-  return {
-    props: {
-      page: {
-        ...currentPage[0],
-      },
-      allPages: sd,
-    },
-  };
-}
-
-export async function getStaticPaths() {
-  const allPages = await getAllPages();
-  const sd = JSON.parse(JSON.stringify(allPages));
-  return {
-    paths: sd.map((page) => `/${page.href}`) || [],
-    fallback: false,
-  };
-}
 
 export default Page;
