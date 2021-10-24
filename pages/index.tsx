@@ -4,7 +4,6 @@ import React from 'react';
 import Container from '../components/Container';
 import Layout from '../components/Layout';
 import { getAllPages } from '../lib/api';
-// import { getAllPages } from '../lib/strapi-api';
 import Page from '../types/page';
 
 interface Props {

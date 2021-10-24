@@ -2,9 +2,6 @@ import Prismic from 'prismic-javascript';
 
 import Page from '../types/page';
 
-// import { IGetAllPages } from '../types/api';
-// import Page from '../types/page';
-
 const REPOSITORY = process.env.PRISMIC_REPOSITORY_NAME;
 const REF_API_URL = `https://${REPOSITORY}.prismic.io/api/v2`;
 const GRAPHQL_API_URL = `https://${REPOSITORY}.prismic.io/graphql`;
