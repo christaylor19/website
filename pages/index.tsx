@@ -3,18 +3,12 @@ import React from 'react';
 
 import Container from '../components/Container';
 import Layout from '../components/Layout';
-import { getAllPages } from '../lib/api';
-import Page from '../types/page';
 
-interface Props {
-  allPages?: Page[];
-}
-
-const Home: React.FC<Props> = ({ allPages = [] }) => {
+const Home: React.FC = () => {
   const { pathname } = useRouter();
   return (
     <>
-      <Layout pathname={pathname} pages={allPages}>
+      <Layout pathname={pathname}>
         <Container title="Hello World">
           <>{'Content Soon'}</>
         </Container>
@@ -22,13 +16,5 @@ const Home: React.FC<Props> = ({ allPages = [] }) => {
     </>
   );
 };
-
-export async function getStaticProps() {
-  const data = await getAllPages();
-  const sd = JSON.parse(JSON.stringify(data));
-  return {
-    props: { allPages: sd },
-  };
-}
 
 export default Home;

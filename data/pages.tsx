@@ -1,4 +1,4 @@
-import About from '../content/about';
+import About from '../content/About';
 import Career from '../content/Career';
 import Portfolio from '../content/Portfolio';
 import Setup from '../content/Setup';
