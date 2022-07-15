@@ -1,18 +1,24 @@
 import React, { FC } from 'react';
 import {
+  SiAirbnb,
   SiAmazonaws,
   SiDocker,
   SiDotnet,
   SiGraphql,
   SiJavascript,
+  SiJest,
   SiNetlify,
   SiNextdotjs,
   SiPuppeteer,
   SiPython,
   SiServerless,
+  SiStorybook,
   SiStyledcomponents,
+  SiSupabase,
   SiTailwindcss,
+  SiTestinglibrary,
   SiTypescript,
+  SiVercel,
 } from 'react-icons/si';
 
 import Layout from '../components/Layout';
@@ -28,6 +34,8 @@ const Home: FC = () => {
           <h4 className="font-normal text-xl mb-2">Prem Visualiser Project</h4>
           <div className="flex flex-row gap-2">
             <SiNetlify />
+            <SiSupabase />
+            <SiAirbnb />
           </div>
           <ProgressBar />
 
@@ -40,8 +48,16 @@ const Home: FC = () => {
             <SiAmazonaws />
             <SiServerless />
             <SiDocker />
+            <SiJest />
+            <SiTestinglibrary />
+            <SiStorybook />
           </div>
           <h4 className="font-normal text-xl mb-2">Apak</h4>
+          <div className="flex flex-row gap-2">
+            <SiJavascript />
+            <SiDotnet />
+          </div>
+
           <h2 className="font-bold text-2xl mb-4">Skills</h2>
           <div className="flex flex-row gap-2">
             <SiJavascript />
@@ -57,6 +73,7 @@ const Home: FC = () => {
             <SiNextdotjs />
             <SiTailwindcss />
             <SiStyledcomponents />
+            <SiVercel />
           </div>
         </div>
       </Layout>
