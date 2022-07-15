@@ -4,7 +4,8 @@
   "description": "personal website",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 1234",
+    "dev": "npm run open-browser && next dev -p 1234",
+    "open-browser": "open http://localhost:1234",
     "build": "next build",
     "start": "next start",
     "test": "jest",
