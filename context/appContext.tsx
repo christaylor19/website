@@ -11,7 +11,7 @@ export const ModeContext = createContext<Partial<ContextProps>>({ mode: 'light' 
 
 const ModeContextProvider = (props) => {
   const { children } = props;
-  const [currentMode, setCurrentMode] = useState<Mode>('light');
+  const [currentMode, setCurrentMode] = useState<Mode>('dark');
 
   const toggle = (): void => {
     const newMode = currentMode === 'light' ? 'dark' : 'light';

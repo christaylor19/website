@@ -1,34 +1,27 @@
-import React from 'react';
+import React, { FC, useContext } from 'react';
+import { ImBrightnessContrast } from 'react-icons/im';
 
-import pages from '../../data/pages';
+import { ModeContext } from '../../context/appContext';
 import NavLink from '../NavLink';
-import MobileMenu from './MobileMenu';
 import SocialLinks from './SocialLinks';
 
-interface Props {
-  pathname: string;
-}
-const Header: React.FC<Props> = ({ pathname }) => {
+const Header: FC = () => {
+  const { toggle } = useContext(ModeContext);
   return (
     <header>
       <nav className="flex flex-row items-center justify-center mt-8 ">
-        <ul className="flex flex-row items-center break-all py-2 px-4 list-none w-full ">
-          <li className="mr-2 p-0">
-            <span className="text-gray-800 dark:text-gray-200  font-semibold no-underline text-xl">
-              {'CHRIS TAYLOR'}
-            </span>
+        <ul className="flex flex-row items-center break-all py-2 list-none w-full ">
+          <li className="mr-6 p-0" key="home-mobile">
+            <NavLink displayName="home" href="/" />
           </li>
+          <li className="flex-grow" key="spacer" />
           <li className="mx-2 p-0">
-            <NavLink displayName="home" pathname={pathname} href="/" />
+            <ImBrightnessContrast
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 h-8 w-8"
+              onClick={() => toggle()}
+            />
           </li>
-          {pages.map((page) => (
-            <li className="xxs:hidden md:block px-2 border-l-2 border-gray-400 dark:border-blue-900 leading-4">
-              <NavLink displayName={page.headerName} pathname={pathname} href={page.href} />
-            </li>
-          ))}
-          <li className="flex-grow" />
           <SocialLinks />
-          <MobileMenu pathname={pathname} />
         </ul>
       </nav>
     </header>
