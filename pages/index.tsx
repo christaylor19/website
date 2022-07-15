@@ -19,6 +19,8 @@ import {
   SiTestinglibrary,
   SiTypescript,
   SiVercel,
+  SiVite,
+  SiWebpack,
 } from 'react-icons/si';
 
 import Layout from '../components/Layout';
@@ -36,6 +38,7 @@ const Home: FC = () => {
             <SiNetlify />
             <SiSupabase />
             <SiAirbnb />
+            <SiVite />
           </div>
           <ProgressBar />
 
@@ -51,6 +54,7 @@ const Home: FC = () => {
             <SiJest />
             <SiTestinglibrary />
             <SiStorybook />
+            <SiWebpack />
           </div>
           <h4 className="font-normal text-xl mb-2">Apak</h4>
           <div className="flex flex-row gap-2">
