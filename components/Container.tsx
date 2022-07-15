@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 interface Props {
   title: string;
@@ -6,7 +6,7 @@ interface Props {
   children: JSX.Element;
 }
 
-const Container: React.FC<Props> = ({ title, subtitle, children }) => {
+const Container: FC<Props> = ({ title, subtitle, children }) => {
   return (
     <>
       <div className="flex flex-col text-gray-500 dark:text-gray-300 items-start w-full px-4 ">
