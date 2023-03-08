@@ -12,7 +12,7 @@ const links: Link[] = [
   {
     id: 'twitter',
     displayName: 'Twitter',
-    href: 'https://twitter.com/1.2em',
+    href: 'https://twitter.com/cwtaylor94',
     Icon: AiOutlineTwitter,
   },
   {
