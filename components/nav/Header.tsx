@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import { FC, useContext } from 'react';
 import { ImBrightnessContrast } from 'react-icons/im';
 
 import { ModeContext } from '../../context/appContext';

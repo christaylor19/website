@@ -1,13 +1,13 @@
 import '../styles/index.css';
 
 import Router from 'next/router';
-import React from 'react';
+import { useEffect } from 'react';
 
 import ModeContextProvider from '../context/appContext';
 import * as gtag from '../utils/gtag';
 
 const App = ({ Component, pageProps }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     const handleRouteChange = (url) => {
       gtag.pageview(url);
     };
