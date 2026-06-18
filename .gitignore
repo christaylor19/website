@@ -1,7 +1,11 @@
-# NPM Modules
+# Dependencies
 /node_modules
 
-# Next.js directory
+# Astro build output
+/dist
+/.astro
+
+# Next.js directory (legacy, being removed)
 /.next
 
 # Task List
@@ -16,3 +20,4 @@ TODO.md
 /.mocks
 
 .vscode/settings.json
+.vercel

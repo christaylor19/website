@@ -1,0 +1,74 @@
+/* Tailwind v4 — single import replaces the old config + directives. */
+@import 'tailwindcss';
+
+/* Rubik is the only font the site uses. Loaded via @fontsource (no raw TTFs). */
+@import '@fontsource/rubik/400.css';
+@import '@fontsource/rubik/500.css';
+@import '@fontsource/rubik/700.css';
+
+/* Dark mode driven by the `dark` class on <html> (set by the inline theme
+   script in BaseLayout), which also respects prefers-color-scheme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens. The look is "data-dense / cartographic" (SofaScore, DataGolf,
+   PCS): warm paper base, deep ink, hairline rules, a single muted-teal accent,
+   and a green→amber heat scale used ONLY inside data cells (never decoration).
+   The teal/heat choices lean into Chris's GIS/cartography background. */
+@theme {
+  --font-sans: 'Rubik', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
+}
+
+:root {
+  --base: oklch(0.97 0.012 85); /* warm paper */
+  --surface: oklch(0.94 0.012 85);
+  --ink: oklch(0.25 0.015 75); /* deep ink */
+  --muted: oklch(0.55 0.015 75);
+  --rule: oklch(0.88 0.012 85);
+  --accent: oklch(0.52 0.07 185); /* muted teal */
+  --good: oklch(0.55 0.09 150);
+  --bad: oklch(0.55 0.13 40);
+  /* Heat scale for data cells (commit grid, etc.): empty → green → amber. */
+  --heat-0: oklch(0.93 0.008 85); /* near-base, "no activity" */
+  --heat-1: oklch(0.82 0.07 160);
+  --heat-2: oklch(0.72 0.11 150);
+  --heat-3: oklch(0.62 0.14 145);
+  --heat-4: oklch(0.52 0.15 140);
+}
+.dark {
+  --base: oklch(0.21 0.012 230);
+  --surface: oklch(0.25 0.012 230);
+  --ink: oklch(0.92 0.01 85);
+  --muted: oklch(0.65 0.012 85);
+  --rule: oklch(0.32 0.012 230);
+  --accent: oklch(0.7 0.09 185);
+  --heat-0: oklch(0.28 0.012 230);
+  --heat-1: oklch(0.4 0.08 160);
+  --heat-2: oklch(0.55 0.11 150);
+  --heat-3: oklch(0.68 0.13 145);
+  --heat-4: oklch(0.8 0.15 140);
+}
+
+/* Expose tokens to Tailwind's color utilities (bg-base, text-ink, etc.). */
+@theme inline {
+  --color-base: var(--base);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-good: var(--good);
+  --color-bad: var(--bad);
+}
+
+html {
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  background: var(--base);
+  color: var(--ink);
+}
+
+/* Numbers are first-class here — align on the digit everywhere data appears. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

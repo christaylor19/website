@@ -1,56 +1,52 @@
 {
-  "name": "christ-dev",
-  "version": "0.0.1",
-  "description": "personal website",
-  "main": "index.js",
-  "scripts": {
-    "dev": "npm run open-browser && next dev -p 1234",
-    "open-browser": "open http://localhost:1234",
-    "build": "next build",
-    "start": "next start",
-    "test": "jest",
-    "test-update": "jest --watch -u",
-    "test-update-silent": "jest --watch -u --silent"
-  },
+  "name": "chris-dev",
+  "version": "0.1.0",
+  "description": "Chris Taylor's personal website (chris.dev)",
+  "type": "module",
+  "author": "Chris Taylor",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/christaylor19/websitee.git"
   },
-  "author": "christaylor19",
-  "license": "ISC",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "prepare": "lefthook install"
+  },
+  "engines": {
+    "node": ">=22"
+  },
   "dependencies": {
-    "dayjs": "^1.11.3",
-    "dotenv": "^16.0.1",
-    "next": "^12.3.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.12.0"
+    "astro": "^6.4.8"
   },
   "devDependencies": {
-    "@types/node": "^18.0.4",
-    "@types/react": "^18.2.75",
-    "@typescript-eslint/eslint-plugin": "^5.30.6",
-    "@typescript-eslint/parser": "^5.30.6",
-    "autoprefixer": "^10.4.7",
-    "eslint": "^8.19.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.30.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^4.3.7",
-    "install": "^0.13.0",
-    "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
-    "pretty-quick": "^3.3.1",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.4"
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/mdx": "^6.0.3",
+    "@eslint/js": "10.0.1",
+    "@fontsource/rubik": "^5.1.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "eslint": "10.5.0",
+    "eslint-plugin-astro": "1.7.0",
+    "jiti": "2.7.0",
+    "lefthook": "2.1.9",
+    "prettier": "3.8.4",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-tailwindcss": "0.8.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "8.61.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged --verbose"
-    }
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "lefthook"
+    ]
   }
 }

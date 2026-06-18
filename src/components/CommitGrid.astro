@@ -1,0 +1,77 @@
+---
+// GitHub-style contribution heat-grid (the SeriesGraph pattern: a matrix of
+// cells on a discrete colour scale). Pure build-time SVG — zero JS shipped.
+//
+// `weeks` is an array of 7-day columns, each value a contribution count.
+// PROTOTYPE: if no data is passed, a deterministic placeholder is generated so
+// the look is real. Wire real GitHub data later (GraphQL contributionsCollection
+// or an unofficial contributions API at build time).
+interface Props {
+  weeks?: number[][];
+}
+
+const WEEKS = 53;
+const DAYS = 7;
+
+// Deterministic placeholder — a pseudo-random-looking but stable pattern.
+function placeholder(): number[][] {
+  const cols: number[][] = [];
+  for (let w = 0; w < WEEKS; w++) {
+    const col: number[] = [];
+    for (let d = 0; d < DAYS; d++) {
+      const seed = (w * 7 + d) * 2654435761;
+      const v = (seed >>> 24) % 16; // 0..15
+      // weekends quieter; taper the start of the year
+      const damp = d >= 5 ? 0.4 : 1;
+      const ramp = Math.min(1, w / 8 + 0.3);
+      col.push(Math.round(v * damp * ramp));
+    }
+    cols.push(col);
+  }
+  return cols;
+}
+
+const weeks = Astro.props.weeks ?? placeholder();
+
+// Bucket a count into one of 5 heat levels (GitHub's 0..4 scale).
+function level(count: number): number {
+  if (count <= 0) return 0;
+  if (count <= 3) return 1;
+  if (count <= 7) return 2;
+  if (count <= 11) return 3;
+  return 4;
+}
+
+const CELL = 11; // px per cell incl. gap
+const SIZE = 9; // px drawn
+const total = weeks.flat().reduce((a, b) => a + b, 0);
+---
+
+<figure class="overflow-x-auto">
+  <svg
+    viewBox={`0 0 ${WEEKS * CELL} ${DAYS * CELL}`}
+    width={WEEKS * CELL}
+    height={DAYS * CELL}
+    role="img"
+    aria-label={`${total} contributions in the last year`}
+    class="max-w-full"
+  >
+    {
+      weeks.map((col, w) =>
+        col.map((count, d) => (
+          <rect
+            x={w * CELL}
+            y={d * CELL}
+            width={SIZE}
+            height={SIZE}
+            rx="2"
+            fill={`var(--heat-${level(count)})`}
+          />
+        )),
+      )
+    }
+  </svg>
+  <figcaption class="tabular text-muted mt-2 text-xs">
+    {total} contributions in the last year
+  </figcaption>
+</figure>

@@ -1,0 +1,54 @@
+---
+// Per-project detail page (PCS rider-profile model: row → its own page).
+// Statically generated from the `projects` content collection at build.
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((p) => ({ params: { slug: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, description, tech, url, repo } = project.data;
+---
+
+<BaseLayout title={`${title} — Chris Taylor`} description={description}>
+  <main class="mx-auto max-w-2xl px-5 py-12">
+    <!-- Breadcrumb (SofaScore entity path) -->
+    <nav class="text-muted text-xs">
+      <a href="/" class="hover:text-accent">Chris Taylor</a>
+      <span class="mx-1">▸</span>
+      <a href="/#projects" class="hover:text-accent">Projects</a>
+      <span class="mx-1">▸</span>
+      <span class="text-ink">{title}</span>
+    </nav>
+
+    <header class="border-rule mt-3 border-b pb-5">
+      <h1 class="text-2xl font-bold tracking-tight">{title}</h1>
+      <p class="text-muted mt-1 text-sm">{description}</p>
+      <div class="mt-3 flex flex-wrap items-center gap-2 text-xs">
+        {tech.map((t) => <span class="bg-surface text-muted rounded-xs px-1.5 py-0.5">{t}</span>)}
+        {
+          repo && (
+            <a href={repo} class="text-accent ml-auto">
+              repo →
+            </a>
+          )
+        }
+        {
+          url && (
+            <a href={url} class="text-accent">
+              live →
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <article class="mt-6 max-w-none text-sm leading-relaxed">
+      <Content />
+    </article>
+  </main>
+</BaseLayout>

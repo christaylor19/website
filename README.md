@@ -1,91 +1,69 @@
-# NextJS Boilerplate Repository
+# chris.dev — personal website
 
-It's annoying to setup the configuration for TypeScript, ESLint and more for each and every project so I've created a Github template repository to use for JAMStack Applications using NextJS
+Chris Taylor's personal site: a lean, data-dense, content-first build. A "rider-profile"
+style homepage (identity panel → career → projects → contributions) where each project and
+role links through to its own page. Inspired by data-heavy sites like ProCyclingStats,
+DataGolf, and Our World in Data.
 
-## JAMStack
+Built with **Astro 6** — zero JS shipped by default, type-safe content collections so projects
+and posts are editable as validated MDX rather than hardcoded markup.
 
-**JAMStack** is a modern technology stack used for simple web applications standing for:
+## Stack
 
-- JavaScript
-- APIs
-- Markup
+- **[Astro 6](https://astro.build)** — static output, near-zero client JS
+- **TypeScript** (strict) — including all config files (`astro.config.ts`, `eslint.config.ts`, `prettier.config.ts`)
+- **Tailwind CSS v4** — via the `@tailwindcss/vite` plugin
+- **MDX** content collections (`projects`, `career`, `blog`)
+- **Rubik** via `@fontsource`
+- **pnpm** · **Lefthook** (git hooks) · **ESLint** + **Prettier**
+- Deployed to **Vercel** (static)
 
-In the words of the [JAMStack website](https://jamstack.org/), it is
+## Develop
 
-> Fast and secure sites and apps delivered by pre-rendering files and serving them directly from a CDN, removing the requirement to manage or run web servers.
+Requires Node 22+ (see `.nvmrc`) and pnpm.
 
-NextJS is just one of the many static site generators. It is more than a site generator though and is an excellent framework for React. It is a server-side rendered site generator in that the user writes the code using React, but it is marked up into HTML at the server side.
+```sh
+pnpm install     # install deps + set up git hooks
+pnpm dev         # dev server at http://localhost:4321
+pnpm build       # production build to dist/
+pnpm preview     # serve the production build locally
+pnpm check       # astro check — types + content-schema validation
+pnpm lint        # eslint
+pnpm format      # prettier --write
+```
 
-## How to use this repo?
+## Project structure
 
-The `boilerplate-components` directory contains React components used in the default template repository. These should be replaced when used in `index.tsx` in new applications.
+```
+src/
+  content/
+    projects/   # one MDX file per project
+    career/     # one MDX file per role
+    blog/       # one MDX file per post
+  content.config.ts        # Zod schemas — the contract for all content
+  pages/
+    index.astro            # the dense homepage
+    projects/[slug].astro  # per-project detail page
+    career/[slug].astro    # per-role detail page
+  layouts/                 # BaseLayout (head, theme script)
+  components/              # CommitGrid, etc.
+  styles/global.css        # design tokens (cartographic palette) + Tailwind
+```
 
-There is a `components` folder in the root directory which contains sub-directories named `atom`, `molecule`, `organism` and `template`. These should contain React components based on the [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) principle.
+## Adding content
 
-This application should include unit tests from the get go. `__tests__` is a directory that `jest`, a React test runner, will find and test the valid tests within. Also, components should use snapshot tests and also unit tests so there should be a corresponding `___.test.tsx` file for each component.
+Content lives as MDX entries with frontmatter validated against the schemas in
+`src/content.config.ts`. A malformed entry fails the build rather than rendering wrong.
 
-## Tech Stack
+- **A project** → add `src/content/projects/<slug>.mdx`. It appears on the homepage and gets
+  its own page at `/projects/<slug>` automatically.
+- **A role** → add `src/content/career/<slug>.mdx`.
+- **A blog post** → add `src/content/blog/<slug>.mdx`.
 
-<span>
-<img src="https://cdn.auth0.com/blog/react-js/react.png" width=16 height=16>
-<a href="https://reactjs.org/" style="padding-left: 6px"><strong>React</strong></a>
-Awesome JavaScript UI Library used by everything
-</span>
-<br/>
-<span>
+See `CLAUDE.md` for the full content model and conventions.
 
-<span>
-<img src="https://cdn.auth0.com/blog/next3/logo.png" width=16 height=16>
-<a href="https://nextjs.org/" style="padding-left: 6px"><strong>NextJS</strong></a>
-React Framework to build static and dynamic sites
-</span>
-<br/>
-<span>
+## Deploy
 
-<span>
-<img src="https://miro.medium.com/max/600/1*i37IyHf6vnhqWIA9osxU3w.png" width=16 height=16>
-<a href="https://jestjs.io/" style="padding-left: 6px"><strong>Jest</strong></a>
-React Testing framework and test runner
-</span>
-<br/>
-<span>
-
-<span>
-<img src="https://testing-library.com/img/octopus-128x128.png" width=16 height=16>
-<a href="https://testing-library.com/" style="padding-left: 6px"><strong>React Testing Library</strong></a>
-Unit Tests for React Components
-</span>
-<br/>
-<span>
-
-<span>
-<img src="https://raw.githubusercontent.com/remojansen/logo.ts/master/ts.png" width=16 height=16>
-<a href="https://www.typescriptlang.org/" style="padding-left: 6px"><strong>TypeScript</strong></a>
-Typed JavaScript
-</span>
-<br/>
-<span>
-
-<span>
-<img src="https://www.styled-components.com/atom.png" width=16 height=16>
-<a href="https://styled-components.com/" style="padding-left: 6px"><strong>Styled Components</strong></a>
-Modular CSS library for React Components
-</span>
-<br/>
-<span>
-
-<span>
-<img src="https://eslint.org/assets/img/favicon.512x512.png" width=16 height=16>
-<a href="https://eslint.org/" style="padding-left: 6px"><strong>ESLint</strong></a>
-JavaScript & TypeScript Linter
-<br/>
-</span>
-
-<span>
-<img src="https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/11490474241551942136-512.png" width=16 height=16>
-<a href="https://prettier.io/" style="padding-left: 6px">
-<strong >Prettier</strong>
-</a>
-Opinionated Code Formatter
-<br/>
-</span>
+Connected to Vercel via Git — pushes to `main` deploy to production, branches get preview URLs.
+`vercel.json` pins the framework to Astro. Output is static; no adapter needed unless server
+routes are added later.

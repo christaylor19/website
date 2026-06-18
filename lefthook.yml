@@ -1,0 +1,12 @@
+# Lefthook — single Go binary, runs hooks in parallel. Replaces husky + lint-staged.
+# Install the git hooks after `pnpm install` via the `prepare` script.
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: '*.{ts,tsx,astro,js,mjs,md,mdx,json,css}'
+      run: pnpm prettier --write {staged_files}
+      stage_fixed: true
+    lint:
+      glob: '*.{ts,tsx,astro}'
+      run: pnpm eslint {staged_files}
