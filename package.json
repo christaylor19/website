@@ -23,11 +23,11 @@
     "node": ">=22"
   },
   "dependencies": {
-    "astro": "^6.4.8"
+    "astro": "^7.1.6"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@astrojs/mdx": "^6.0.3",
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/mdx": "^7.0.5",
     "@eslint/js": "10.0.1",
     "@fontsource/rubik": "^5.1.0",
     "@tailwindcss/vite": "^4.0.0",
@@ -47,6 +47,13 @@
       "esbuild",
       "sharp",
       "lefthook"
-    ]
+    ],
+    "overrides": {
+      "postcss": "^8.5.25",
+      "sharp": "^0.35.0",
+      "svgo": "^4.0.2",
+      "fast-uri": "^3.1.4",
+      "brace-expansion": "^5.0.7"
+    }
   }
 }
