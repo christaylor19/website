@@ -145,4 +145,9 @@ All legacy Next.js files deleted wholesale in one sweep:
 
 ## Done
 
-_(nothing yet)_
+- [x] **NYC map (`/nyc-map`)** _(2026-10-01)_ — zoomable Leaflet map (the site's one JS island).
+      Boroughs (DCP `nybb`, water-clipped) when zoomed out; 2020 NTAs (262 neighbourhoods) from zoom
+      12, shaded per borough hue with graph colouring so touching neighbourhoods never match; parks,
+      cemeteries, airports styled separately. Filters for sports arenas, major sites and transport
+      hubs (`src/data/nyc-places.ts`). Boundaries prebuilt to `public/data/nyc/` by
+      `scripts/build-nyc-geo.py` (sources listed in the script). Basemap: CARTO tiles.

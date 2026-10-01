@@ -1,0 +1,428 @@
+---
+// Zoomable map of New York City: boroughs when zoomed out, 2020 Neighborhood
+// Tabulation Areas when zoomed in, with filterable points of interest.
+// Boundaries are prebuilt by scripts/build-nyc-geo.py into public/data/nyc/.
+// The map itself is the one interactive island on the site (Leaflet).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { categories, places } from '../data/nyc-places';
+
+const boroughs = [
+  ['Manhattan', 1],
+  ['Bronx', 2],
+  ['Brooklyn', 3],
+  ['Queens', 4],
+  ['Staten Island', 5],
+] as const;
+
+const counts = Object.fromEntries(
+  Object.keys(categories).map((c) => [c, places.filter((p) => p.category === c).length]),
+);
+---
+
+<BaseLayout
+  title="New York City map — Chris Taylor"
+  description="Zoomable map of New York City's boroughs and neighbourhoods, with sports arenas, major sites and transport hubs."
+>
+  <div class="flex h-dvh flex-col">
+    <header class="border-rule flex items-baseline gap-3 border-b px-4 py-2">
+      <nav class="text-muted text-xs">
+        <a href="/" class="hover:text-accent">Chris Taylor</a>
+        <span class="mx-1">▸</span>
+        <span class="text-ink">NYC map</span>
+      </nav>
+      <p class="text-muted ml-auto hidden text-xs sm:block">
+        Zoom in to see neighbourhoods · click an area for details
+      </p>
+    </header>
+
+    <div class="relative flex-1">
+      <div id="map" class="absolute inset-0" aria-label="Map of New York City"></div>
+
+      <aside
+        class="bg-base/95 border-rule absolute top-3 right-3 z-[1000] w-60 rounded-sm border text-sm shadow-sm"
+      >
+        <details open id="layers-panel" class="group">
+          <summary
+            class="text-muted cursor-pointer list-none px-3 py-2 text-xs font-semibold tracking-wide uppercase"
+          >
+            Layers <span class="float-right group-open:rotate-180">▾</span>
+          </summary>
+
+          <div class="px-3 pb-3">
+            <fieldset>
+              <legend class="sr-only">Points of interest</legend>
+              {
+                Object.entries(categories).map(([key, { label, colour }]) => (
+                  <label class="flex cursor-pointer items-center gap-2 py-0.5">
+                    <input type="checkbox" data-category={key} class="accent-[var(--accent)]" />
+                    <span
+                      class="inline-block size-3 rounded-full border border-white"
+                      style={`background:${colour}`}
+                    />
+                    {label}
+                    <span class="tabular text-muted ml-auto text-xs">{counts[key]}</span>
+                  </label>
+                ))
+              }
+            </fieldset>
+
+            <h3 class="text-muted mt-3 mb-1 text-xs font-semibold tracking-wide uppercase">
+              Boroughs
+            </h3>
+            <ul class="space-y-0.5">
+              {
+                boroughs.map(([name, code]) => (
+                  <li class="flex items-center gap-2">
+                    <span class="inline-flex">
+                      {[0, 1, 2, 3].map((shade) => (
+                        <span class="inline-block h-3 w-1.5" data-swatch={`${code}-${shade}`} />
+                      ))}
+                    </span>
+                    {name}
+                  </li>
+                ))
+              }
+            </ul>
+
+            <h3 class="text-muted mt-3 mb-1 text-xs font-semibold tracking-wide uppercase">
+              Other areas
+            </h3>
+            <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5">
+              {
+                [
+                  ['park', 'Parks'],
+                  ['cemetery', 'Cemeteries'],
+                  ['airport', 'Airports'],
+                  ['special', 'Other'],
+                ].map(([t, label]) => (
+                  <li
+                    class="flex items-center gap-2"
+                    title={t === 'special' ? 'Rail yards, Navy Yard, forts, Rikers, UN' : undefined}
+                  >
+                    <span class="inline-block size-3" data-swatch={t} />
+                    {label}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </details>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+  import type { Feature, FeatureCollection, Geometry } from 'geojson';
+  import { categories, places, type Place, type PlaceCategory } from '../data/nyc-places';
+
+  interface BoroughProps {
+    code: number;
+    name: string;
+    areaSqMi: number;
+  }
+  interface NtaProps {
+    code: string;
+    name: string;
+    boroCode: number;
+    boro: string;
+    type: 'residential' | 'park' | 'cemetery' | 'airport' | 'special';
+    district: string | null;
+    population: number | null;
+    areaSqMi: number;
+    shade: number;
+  }
+
+  // Zoom at which borough fills hand over to neighbourhood polygons.
+  const NEIGHBOURHOOD_ZOOM = 12;
+  // Zoom at which neighbourhood names are drawn permanently on the map.
+  const LABEL_ZOOM = 14;
+
+  // One hue per borough; neighbourhoods use 4 shades of it, assigned by graph
+  // colouring at build time so touching neighbourhoods never share a shade.
+  const BORO_HUES: Record<number, number> = {
+    1: 25, // Manhattan — coral
+    2: 305, // Bronx — violet
+    3: 250, // Brooklyn — blue
+    4: 70, // Queens — amber
+    5: 190, // Staten Island — teal
+  };
+  const SHADE_LIGHTNESS = [0.86, 0.78, 0.7, 0.62];
+  const AREA_FILLS: Record<Exclude<NtaProps['type'], 'residential'>, string> = {
+    park: 'oklch(0.78 0.1 145)',
+    cemetery: 'oklch(0.75 0.03 145)',
+    airport: 'oklch(0.75 0.015 250)',
+    special: 'oklch(0.8 0.01 85)',
+  };
+
+  const boroFill = (code: number) => `oklch(0.74 0.11 ${BORO_HUES[code]})`;
+  const boroLine = (code: number) => `oklch(0.45 0.12 ${BORO_HUES[code]})`;
+  const ntaFill = (p: NtaProps) =>
+    p.type === 'residential'
+      ? `oklch(${SHADE_LIGHTNESS[p.shade]} 0.1 ${BORO_HUES[p.boroCode]})`
+      : AREA_FILLS[p.type];
+
+  // Fill the legend swatches from the same functions the map uses.
+  document.querySelectorAll<HTMLElement>('[data-swatch]').forEach((el) => {
+    const key = el.dataset.swatch!;
+    if (key.includes('-')) {
+      const [code, shade] = key.split('-').map(Number);
+      el.style.background = `oklch(${SHADE_LIGHTNESS[shade]} 0.1 ${BORO_HUES[code]})`;
+    } else {
+      el.style.background = AREA_FILLS[key as keyof typeof AREA_FILLS];
+    }
+  });
+
+  // Keep the map visible on phones: start with the layers panel collapsed.
+  if (window.matchMedia('(max-width: 640px)').matches) {
+    document.getElementById('layers-panel')?.removeAttribute('open');
+  }
+
+  const dark = document.documentElement.classList.contains('dark');
+  const tiles = dark ? 'dark' : 'light';
+
+  const map = L.map('map', {
+    center: [40.7, -73.94],
+    zoom: 11,
+    minZoom: 9,
+    maxZoom: 18,
+    maxBounds: [
+      [40.3, -74.6],
+      [41.1, -73.3],
+    ],
+    zoomSnap: 0.5,
+  });
+
+  // Unlabelled basemap underneath, labels in a pane above the polygons.
+  const attribution =
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a> · Boundaries: <a href="https://www.nyc.gov/site/planning/data-maps/open-data.page">NYC DCP</a>';
+  L.tileLayer(`https://{s}.basemaps.cartocdn.com/${tiles}_nolabels/{z}/{x}/{y}{r}.png`, {
+    attribution,
+    subdomains: 'abcd',
+  }).addTo(map);
+  map.createPane('labels');
+  map.getPane('labels')!.style.zIndex = '450';
+  map.getPane('labels')!.style.pointerEvents = 'none';
+  L.tileLayer(`https://{s}.basemaps.cartocdn.com/${tiles}_only_labels/{z}/{x}/{y}{r}.png`, {
+    subdomains: 'abcd',
+    pane: 'labels',
+    minZoom: 13,
+  }).addTo(map);
+
+  const fmt = new Intl.NumberFormat('en-US');
+
+  const [boroData, ntaData] = await Promise.all([
+    fetch('/data/nyc/boroughs.geojson').then((r) => r.json()) as Promise<
+      FeatureCollection<Geometry, BoroughProps>
+    >,
+    fetch('/data/nyc/neighbourhoods.geojson').then((r) => r.json()) as Promise<
+      FeatureCollection<Geometry, NtaProps>
+    >,
+  ]);
+
+  // Boroughs: filled when zoomed out, outline-only over the neighbourhoods.
+  const boroLayer = L.geoJSON(boroData, {
+    onEachFeature: (f: Feature<Geometry, BoroughProps>, layer) => {
+      const n = ntaData.features.filter((nta) => nta.properties.boroCode === f.properties.code);
+      const pop = n.reduce((sum, nta) => sum + (nta.properties.population ?? 0), 0);
+      layer.bindTooltip(f.properties.name, { sticky: true, className: 'nyc-tip' });
+      layer.bindPopup(
+        `<strong>${f.properties.name}</strong><br>
+         ${f.properties.areaSqMi} sq mi land · ${n.length} neighbourhoods<br>
+         ${fmt.format(pop)} residents (2020 census)<br>
+         <span class="nyc-muted">Zoom in to explore neighbourhoods</span>`,
+      );
+      layer.on('click', (e) => {
+        if (map.getZoom() < NEIGHBOURHOOD_ZOOM)
+          map.flyToBounds((e.target as L.Polygon).getBounds());
+      });
+    },
+  }).addTo(map);
+  map.fitBounds(boroLayer.getBounds(), { padding: [8, 8] });
+
+  // Neighbourhoods with hover highlight, tooltip and details popup.
+  const ntaLayer = L.geoJSON(ntaData, {
+    style: (f) => ({
+      fillColor: ntaFill(f!.properties as NtaProps),
+      fillOpacity: 0.65,
+      color: dark ? '#1e2329' : '#ffffff',
+      weight: 1,
+    }),
+    onEachFeature: (f: Feature<Geometry, NtaProps>, layer) => {
+      const p = f.properties;
+      layer.bindTooltip(p.name, { className: 'nyc-label', direction: 'center' });
+      layer.bindPopup(
+        `<strong>${p.name}</strong><br>
+         <span class="nyc-muted">${p.boro}${p.district ? ` · ${p.district}` : ''}</span><br>
+         ${p.population ? `${fmt.format(p.population)} residents · ` : ''}${p.areaSqMi} sq mi`,
+      );
+      layer.on({
+        mouseover: (e) => (e.target as L.Path).setStyle({ weight: 3, fillOpacity: 0.85 }),
+        mouseout: (e) => ntaLayer.resetStyle(e.target as L.Path),
+      });
+    },
+  });
+
+  // Swap layers / label mode as the zoom crosses the thresholds.
+  let labelsOn: boolean | null = null;
+  function onZoom() {
+    const z = map.getZoom();
+    const detailed = z >= NEIGHBOURHOOD_ZOOM;
+    if (detailed && !map.hasLayer(ntaLayer)) ntaLayer.addTo(map);
+    if (!detailed && map.hasLayer(ntaLayer)) map.removeLayer(ntaLayer);
+    boroLayer.setStyle((f) => {
+      const code = (f!.properties as BoroughProps).code;
+      return detailed
+        ? { fill: false, color: boroLine(code), weight: 3 }
+        : {
+            fill: true,
+            fillColor: boroFill(code),
+            fillOpacity: 0.55,
+            color: boroLine(code),
+            weight: 2,
+          };
+    });
+    // Borough outlines must not swallow clicks meant for neighbourhoods.
+    boroLayer.eachLayer((l) => {
+      const el = (l as L.Path).getElement() as HTMLElement | undefined;
+      if (el) el.style.pointerEvents = detailed ? 'none' : '';
+    });
+    if (detailed) boroLayer.bringToFront();
+
+    const wantLabels = z >= LABEL_ZOOM;
+    if (wantLabels !== labelsOn) {
+      labelsOn = wantLabels;
+      ntaLayer.eachLayer((l) => {
+        const nta = (l as L.GeoJSON & { feature: Feature<Geometry, NtaProps> }).feature.properties;
+        l.unbindTooltip();
+        // Permanent labels for real neighbourhoods only; parks etc. keep hover tooltips.
+        const permanent = wantLabels && nta.type === 'residential';
+        l.bindTooltip(nta.name, {
+          permanent,
+          direction: 'center',
+          className: permanent ? 'nyc-label' : 'nyc-tip',
+          sticky: !permanent,
+        });
+      });
+    }
+  }
+  map.on('zoomend', onZoom);
+  onZoom();
+
+  // Points of interest: one layer group per category, toggled by the filters.
+  const ICONS: Record<string, string> = {
+    sports:
+      '<circle cx="12" cy="12" r="6" fill="none" stroke="#fff" stroke-width="2"/><path d="M6 12h12M12 6v12" stroke="#fff" stroke-width="1.5"/>',
+    sites:
+      '<path d="M12 5l2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7L5.2 10l4.7-.7z" fill="#fff"/>',
+    airport:
+      '<path d="M12 4l1.5 6 5.5 3v1.5l-5.5-1.5-.5 4 2 1.5V20l-3-1-3 1v-1.5l2-1.5-.5-4L5 14.5V13l5.5-3z" fill="#fff"/>',
+    rail: '<rect x="7" y="5" width="10" height="11" rx="2" fill="#fff"/><path d="M8 19l2-3M16 19l-2-3" stroke="#fff" stroke-width="1.5"/>',
+    subway:
+      '<text x="12" y="16.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="sans-serif">M</text>',
+    bus: '<rect x="6.5" y="6" width="11" height="11" rx="2" fill="#fff"/><rect x="8" y="8" width="8" height="4" fill="currentColor"/>',
+    ferry: '<path d="M5 14h14l-2 4H7zM9 9h6v4H9z" fill="#fff"/>',
+    heliport:
+      '<text x="12" y="16.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="sans-serif">H</text>',
+  };
+
+  function placeIcon(place: Place) {
+    const { colour } = categories[place.category];
+    const glyph = ICONS[place.kind ?? place.category];
+    const size = place.kind === 'airport' ? 30 : 24;
+    return L.divIcon({
+      className: 'nyc-pin',
+      html: `<svg viewBox="0 0 24 24" width="${size}" height="${size}" style="color:${colour}"><circle cx="12" cy="12" r="11" fill="${colour}" stroke="#fff" stroke-width="1.5"/>${glyph}</svg>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
+      popupAnchor: [0, -size / 2],
+    });
+  }
+
+  const poiLayers = Object.fromEntries(
+    (Object.keys(categories) as PlaceCategory[]).map((cat) => [
+      cat,
+      L.layerGroup(
+        places
+          .filter((p) => p.category === cat)
+          .map((p) =>
+            L.marker(p.latlng, { icon: placeIcon(p), title: p.name, riseOnHover: true })
+              .bindTooltip(p.name, { direction: 'top', offset: [0, -12], className: 'nyc-tip' })
+              .bindPopup(
+                `<strong>${p.name}</strong><br>${p.detail}${p.outsideNyc ? '<br><span class="nyc-muted">Outside the five boroughs</span>' : ''}`,
+              ),
+          ),
+      ),
+    ]),
+  ) as Record<PlaceCategory, L.LayerGroup>;
+
+  document.querySelectorAll<HTMLInputElement>('input[data-category]').forEach((input) => {
+    const layer = poiLayers[input.dataset.category as PlaceCategory];
+    const sync = () => (input.checked ? layer.addTo(map) : layer.remove());
+    input.addEventListener('change', sync);
+    sync(); // respect checkbox state restored by the browser on back/forward
+  });
+</script>
+
+<style is:global>
+  /* Leaflet chrome tuned to the site's tokens. */
+  #map {
+    background: var(--surface);
+    font-family: var(--font-sans);
+  }
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-tip {
+    background: var(--base);
+    color: var(--ink);
+    border-radius: 2px;
+  }
+  .leaflet-popup-content {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .nyc-muted {
+    color: var(--muted);
+  }
+  .leaflet-tooltip.nyc-tip {
+    background: var(--base);
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    box-shadow: none;
+    font-size: 12px;
+  }
+  /* Permanent neighbourhood labels: text only, haloed for legibility. */
+  .leaflet-tooltip.nyc-label {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    color: oklch(0.25 0.015 75);
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+    max-width: 9rem;
+    white-space: normal;
+    text-shadow:
+      0 0 3px #fff,
+      0 0 3px #fff,
+      0 0 2px #fff;
+  }
+  .leaflet-tooltip.nyc-label::before {
+    display: none;
+  }
+  .nyc-pin {
+    background: none;
+    border: none;
+    filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.35));
+  }
+  .leaflet-control-attribution {
+    background: color-mix(in oklch, var(--base) 85%, transparent) !important;
+    color: var(--muted);
+  }
+  .leaflet-control-attribution a {
+    color: var(--accent);
+  }
+</style>
