@@ -23,7 +23,7 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
   keeping three sources in sync.
 - **Content sections** — About/intro (incl. a note on setup/tooling), Projects, Writing/blog,
   Links/contact. A dedicated "uses"/setup page is optional — fold into intro initially.
-- **Domain: `ctaylor.dev`** _(being purchased)_ — set as `site` in `astro.config.mjs`. Note CLAUDE.md
+- **Domain: `ctaylor.dev`** _(purchased; served by Vercel, `www` redirects to the apex)_ — set as `site` in `astro.config.mjs`. Note CLAUDE.md
   still refers to the site as "chris.dev"; reconcile once the domain is confirmed. `.dev` is
   HSTS-preloaded so HTTPS is mandatory — Vercel issues certs automatically on domain connect.
 - **Deploy: Vercel** _(confirmed)_ — static output, no adapter (Vercel auto-detects Astro). Add
@@ -129,7 +129,7 @@ All legacy Next.js files deleted wholesale in one sweep:
 - [x] **Fixed framework preset** — project was still set to **Next.js** from 2021. Added `vercel.json`
       with `"framework": "astro"` (committed config overrides the stale dashboard preset).
 - [ ] **Verify a real deploy** — confirm a push to `main` builds + serves correctly on Vercel.
-- [ ] **Point `ctaylor.dev` at the project** once the domain is purchased.
+- [x] **Point `ctaylor.dev` at the project** once the domain is purchased.
 
 ### 4. Documentation
 
