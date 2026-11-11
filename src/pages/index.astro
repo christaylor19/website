@@ -53,20 +53,31 @@ const lorem =
       <table class="w-full text-sm">
         <tbody>
           {
-            career.map((c) => (
-              <tr class="group border-rule hover:bg-surface border-b">
-                <td class="py-1.5">
-                  <a href={`/career/${c.id}`} class="text-accent font-medium">
-                    {c.data.org}
-                  </a>
-                </td>
-                <td class="text-muted py-1.5">{c.data.role}</td>
-                <td class="tabular text-muted py-1.5 text-right">
-                  {c.data.from}–{c.data.to}
-                </td>
-                <td class="text-muted group-hover:text-accent py-1.5 pl-2 text-right">→</td>
-              </tr>
-            ))
+            career.map((c) =>
+              c.data.break ? (
+                <tr class="border-rule text-muted border-b">
+                  <td class="py-1.5 pr-3 whitespace-nowrap italic">{c.data.org}</td>
+                  <td class="py-1.5">{c.data.role}</td>
+                  <td class="tabular py-1.5 pl-2 text-right whitespace-nowrap">
+                    {c.data.from}–{c.data.to}
+                  </td>
+                  <td class="py-1.5 pl-2" />
+                </tr>
+              ) : (
+                <tr class="group border-rule hover:bg-surface border-b">
+                  <td class="py-1.5 pr-3 whitespace-nowrap">
+                    <a href={`/career/${c.id}`} class="text-accent font-medium">
+                      {c.data.org}
+                    </a>
+                  </td>
+                  <td class="text-muted py-1.5">{c.data.role}</td>
+                  <td class="tabular text-muted py-1.5 pl-2 text-right whitespace-nowrap">
+                    {c.data.from}–{c.data.to}
+                  </td>
+                  <td class="text-muted group-hover:text-accent py-1.5 pl-2 text-right">→</td>
+                </tr>
+              ),
+            )
           }
         </tbody>
       </table>

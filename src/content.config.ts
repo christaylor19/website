@@ -32,6 +32,7 @@ const career = defineCollection({
     location: z.string().optional(),
     url: z.string().url().optional(),
     order: z.number().default(999),
+    break: z.boolean().default(false),
   }),
 });
 

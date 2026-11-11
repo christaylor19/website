@@ -5,7 +5,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-  const roles = await getCollection('career');
+  const roles = (await getCollection('career')).filter((r) => !r.data.break);
   return roles.map((r) => ({ params: { slug: r.id }, props: { role: r } }));
 }
 
@@ -39,7 +39,7 @@ const { org, role: title, from, to, location, url } = role.data;
       </p>
     </header>
 
-    <article class="mt-6 max-w-none text-sm leading-relaxed">
+    <article class="mt-6 max-w-none space-y-3 text-sm leading-relaxed">
       <Content />
     </article>
   </main>
