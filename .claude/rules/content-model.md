@@ -4,16 +4,18 @@ Content is MDX in collections under `src/content/`. Schemas live in `src/content
 
 ### Collections
 
-| Collection | Folder                  | Required frontmatter                              | Optional (default)                                                               |
-| ---------- | ----------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `projects` | `src/content/projects/` | `title`, `description`                            | `tech` (`[]`), `url`, `repo`, `order` (999), `featured` (false), `draft` (false) |
-| `career`   | `src/content/career/`   | `org`, `role`, `from`, `to` (`number` or `'now'`) | `location`, `url`, `order` (999)                                                 |
-| `blog`     | `src/content/blog/`     | `title`, `description`, `pubDate`                 | `updatedDate`, `tags` (`[]`), `draft` (false)                                    |
+| Collection  | Folder                   | Required frontmatter                                     | Optional (default)                                                               |
+| ----------- | ------------------------ | -------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `projects`  | `src/content/projects/`  | `title`, `description`                                   | `tech` (`[]`), `url`, `repo`, `order` (999), `featured` (false), `draft` (false) |
+| `career`    | `src/content/career/`    | `org`, `role`, `from`, `to` (`number` or `'now'`)        | `location`, `url`, `order` (999)                                                 |
+| `blog`      | `src/content/blog/`      | `title`, `description`, `pubDate`                        | `updatedDate`, `tags` (`[]`), `draft` (false)                                    |
+| `interests` | `src/content/interests/` | `title`, `caption`, `credit`, `url`, `image`, `imageAlt` | `order` (999), `draft` (false)                                                   |
 
 ### Adding an entry
 
 - **A project:** add `src/content/projects/<slug>.mdx`. The slug is the filename and becomes `/projects/<slug>`. `url` and `repo` must be full `https://` URLs. Lower `order` sorts first.
 - **A career role:** add `src/content/career/<slug>.mdx`. Keep it short; LinkedIn holds the full history.
+- **An interest:** add `src/content/interests/<slug>.mdx` plus its image (`./<slug>.png`, 1200x750) in the same folder. `url` is the live piece, `credit` names the data sources. They render on `/interests`.
 - **A blog post:** add `src/content/blog/<slug>.mdx` with `pubDate` as `YYYY-MM-DD`.
 
 ### Rules

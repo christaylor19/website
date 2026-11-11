@@ -49,4 +49,19 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { projects, career, blog };
+const interests = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/interests' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      caption: z.string(),
+      credit: z.string(),
+      url: z.string().url(),
+      image: image(),
+      imageAlt: z.string(),
+      order: z.number().default(999),
+      draft: z.boolean().default(false),
+    }),
+});
+
+export const collections = { projects, career, blog, interests };
