@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 
 git fetch origin main --quiet
 base="$(git merge-base origin/main HEAD)"
-changed="$(git diff --name-only --diff-filter=ACMR "$base" HEAD; git diff --name-only --diff-filter=ACMR HEAD; git ls-files --others --exclude-standard)"
+changed="$(git diff --name-only --diff-filter=ACMRD "$base" HEAD; git diff --name-only --diff-filter=ACMRD HEAD; git ls-files --others --exclude-standard)"
 changed="$(printf '%s\n' "$changed" | sed '/^$/d' | sort -u)"
 
 if [ -z "$changed" ]; then
