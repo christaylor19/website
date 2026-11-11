@@ -135,8 +135,8 @@ All legacy Next.js files deleted wholesale in one sweep:
 
 - [x] **Write README.md** — done (2026-06-18). Real Astro README: stack, dev commands, structure,
       how to add content, deploy notes.
-- [ ] **Reconcile CLAUDE.md** — already exists but says "Astro 5" (now 6) and "chris.dev" (domain being
-      bought is `ctaylor.dev`). Update both, plus the content model now includes a `career` collection.
+- [x] **Reconcile CLAUDE.md** — rewritten for Astro 6, `ctaylor.dev` and the `career` collection, with
+      `.claude/rules/`, `.mcp.json`, skills, `pnpm verify` and CI added (Almanac-style tooling).
 - [ ] **Write README.md** — what the site is, how to run (`pnpm dev`), how to deploy.
 - [ ] **Document the content model** — the frontmatter shape for `projects` and `blog` so entries are
       trivial to add.

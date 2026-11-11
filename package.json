@@ -16,6 +16,7 @@
     "astro": "astro",
     "check": "astro check",
     "format": "prettier --write .",
+    "verify": "bash scripts/verify.sh",
     "lint": "eslint .",
     "prepare": "lefthook install"
   },

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install:*)",
+      "Bash(pnpm check:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm format:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm verify:*)",
+      "Bash(pnpm preview:*)",
+      "Bash(pnpm astro:*)",
+      "Bash(bash scripts/verify.sh:*)"
+    ]
+  }
+}
