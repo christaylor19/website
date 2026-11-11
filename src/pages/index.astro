@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CommitGrid from '../components/CommitGrid.astro';
 
@@ -17,6 +18,10 @@ const facts = [
 
 const projects = (await getCollection('projects'))
   .filter((p) => !p.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const interests = (await getCollection('interests'))
+  .filter((i) => !i.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
 
 const career = (await getCollection('career')).sort((a, b) => a.data.order - b.data.order);
@@ -103,10 +108,38 @@ const lorem =
 
     <section id="interests" class="mt-8">
       <h2 class="text-muted mb-2 text-xs font-semibold tracking-wide uppercase">Interests</h2>
-      <a href="/interests" class="group border-rule hover:bg-surface flex border-b py-1.5 text-sm">
-        <span>Outside work, I make maps of transport and cities.</span>
-        <span class="text-muted group-hover:text-accent ml-auto pl-2">→</span>
-      </a>
+      <p class="text-muted text-sm">
+        I studied geography and GIS before I wrote code, and I never really stopped making maps.
+        These are side projects: public data on cities and railways, turned into something you can
+        read at a glance.
+      </p>
+      <ul class="mt-4 grid gap-x-4 gap-y-6 sm:grid-cols-3">
+        {
+          interests.map((i) => (
+            <li class="flex flex-col">
+              <a href={i.data.url} class="group block" target="_blank" rel="noopener">
+                <Image
+                  src={i.data.image}
+                  alt={i.data.imageAlt}
+                  width={1200}
+                  height={750}
+                  widths={[400, 640, 960]}
+                  sizes="(min-width: 40rem) 13rem, 100vw"
+                  class="border-rule group-hover:border-accent w-full rounded-xs border"
+                />
+                <h3 class="text-accent mt-2 text-sm font-medium">
+                  {i.data.title}
+                  <span class="text-muted group-hover:text-accent ml-1" aria-hidden="true">
+                    ↗
+                  </span>
+                </h3>
+              </a>
+              <p class="mt-1 text-xs leading-relaxed">{i.data.caption}</p>
+              <p class="text-muted mt-1 text-xs">Data: {i.data.credit}.</p>
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <!-- Contribution heat-grid (SeriesGraph pattern; static SVG, zero JS) -->

@@ -16,8 +16,8 @@ happens.
 - **Site is the hub, CV is minimal.** Intro, projects and links out to LinkedIn. Do not replicate the
   full work history; LinkedIn is the source of truth.
 - **Sections:** About/intro (with a short setup/tooling note), Projects, Writing, Interests, Links/contact.
-  Interests is its own page (`/interests`), linked from the homepage. It shows personal work such as the
-  transport and map visualisations. Almanac is a separate project and stays out of Interests.
+  Interests is a homepage section, not a subpage. It shows personal work such as the transport and map
+  visualisations. Almanac is a separate project and stays out of Interests.
 - **Domain:** `ctaylor.dev` (the `site` value in `astro.config.ts`). `.dev` is HTTPS-only; Vercel
   issues certificates.
 - **Deploy:** Vercel, static, no adapter. Add `@astrojs/vercel` only if SSR is ever needed.
