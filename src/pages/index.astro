@@ -49,6 +49,8 @@ const interests = (await getCollection('interests'))
   .filter((i) => !i.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
 
+const city = (location?: string) => location?.split(',')[0]?.trim() ?? '';
+
 const career = (await getCollection('career')).sort((a, b) => a.data.order - b.data.order);
 ---
 
@@ -84,6 +86,7 @@ const career = (await getCollection('career')).sort((a, b) => a.data.order - b.d
                 <tr class="border-rule text-muted border-b">
                   <td class="py-1.5 pr-3 whitespace-nowrap italic">{c.data.org}</td>
                   <td class="py-1.5">{c.data.role}</td>
+                  <td class="hidden py-1.5 sm:table-cell" />
                   <td class="tabular py-1.5 pl-2 text-right whitespace-nowrap">
                     {c.data.from}–{c.data.to}
                   </td>
@@ -96,7 +99,15 @@ const career = (await getCollection('career')).sort((a, b) => a.data.order - b.d
                       {c.data.org}
                     </a>
                   </td>
-                  <td class="text-muted py-1.5">{c.data.role}</td>
+                  <td class="text-muted py-1.5">
+                    {c.data.role}
+                    {city(c.data.location) && (
+                      <span class="block text-xs sm:hidden">{city(c.data.location)}</span>
+                    )}
+                  </td>
+                  <td class="text-muted hidden py-1.5 pr-3 sm:table-cell">
+                    {city(c.data.location)}
+                  </td>
                   <td class="tabular text-muted py-1.5 pl-2 text-right whitespace-nowrap">
                     {c.data.from}–{c.data.to}
                   </td>
