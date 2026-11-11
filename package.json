@@ -1,7 +1,7 @@
 {
-  "name": "chris-dev",
+  "name": "ctaylor-dev",
   "version": "0.1.0",
-  "description": "Chris Taylor's personal website (chris.dev)",
+  "description": "Chris Taylor's personal website (ctaylor.dev)",
   "type": "module",
   "packageManager": "pnpm@10.33.2",
   "author": "Chris Taylor",

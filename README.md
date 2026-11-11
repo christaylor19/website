@@ -1,4 +1,4 @@
-# chris.dev — personal website
+# ctaylor.dev — personal website
 
 Chris Taylor's personal site: a lean, data-dense, content-first build. A "rider-profile"
 style homepage (identity panel → career → projects → contributions) where each project and
