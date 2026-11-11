@@ -1,10 +1,20 @@
 ---
 title: Almanac
-description: Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.
-repo: https://github.com/christaylor19
-order: 2
-draft: true
+description: A Wikipedia-style reference site for sports data, starting with football.
+url: https://almanac.ctaylor.dev
+order: 1
+featured: true
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+Almanac is a reference site for sports data, built like Wikipedia: every club, competition, season, match and venue gets its own linked page, and every value carries a source. It starts with football, with 150 competitions across 72 countries and nearly 90,000 matches so far.
+
+**How I build it.** Almanac is where I work out how to build with AI agents, and most work starts as an artifact rather than code:
+
+- **Research first.** Before picking a data source, I compared around 15 of them on coverage, cost and licence.
+- **Mockups before pages.** New pages start as mockups, marked up against what's already live so the change is obvious.
+- **A design system the agents read first.** It sets the rules every page follows, drawn from the real code, and agents read it before touching the UI.
+- **Decisions written down.** Architecture proposals end with the open questions I still need to answer.
+
+**Data that looks after itself.** Nightly jobs pull in new data, check it and fix what they can. Unverified data never reaches the site: suspect seasons are held back, fixes are rehearsed before they run, and two clubs are never merged automatically.
+
+**Stack.** Astro and React on the front end, a Fastify API, Postgres and Redis on Railway, and Claude Code agents working from Linear tickets.
