@@ -30,15 +30,15 @@ Keep a `Parked:` line for anything set aside.
 
 - Fresh worktree off `origin/main`, with its own `pnpm install`. Never `git stash`.
 - No code comments.
-- Work in a branch `type/short-slug`; one logical change per PR.
+- One logical change per commit.
 - Run `pnpm verify`, then check the page in a real browser at desktop and mobile widths, light and dark.
-- Open the PR with the three-section body (What has changed, Context, Code changes). CI must be green and the Vercel preview checked before merge.
-- Rebase (`--force-with-lease`) only on a conflict or when CI needs a change from `main`. Never push `main`.
-- After merge, load the live page and confirm it returns 200 and shows the change.
+- Ship straight to `main`, no PR: `git fetch && git rebase origin/main && pnpm verify && git push origin HEAD:main`. A rejected push means rebase, verify and push again. Never force-push `main`.
+- After the push, check the Vercel production deploy is green and the live page on https://ctaylor.dev returns 200 and shows the change. A failed build leaves the last good deploy live; fix forward.
+- Open a PR only when Chris asks to see a change before it goes live.
 
 ## 4. Agent briefs
 
-Every brief includes: the `TASKS.md` item, a fresh worktree off `origin/main`, no code comments, no `git stash`, the verify and browser checks above, the PR body format, and "if any action is denied, stop and report". Name any other running agents and the files they own. Use Sonnet for builds to a clear brief.
+Every brief includes: the `TASKS.md` item, a fresh worktree off `origin/main`, no code comments, no `git stash`, the verify and browser checks above, the push-to-`main` steps, and "if any action is denied, stop and report". Name any other running agents and the files they own. Use Sonnet for builds to a clear brief.
 
 ## 5. Pause
 

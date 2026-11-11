@@ -41,13 +41,16 @@ Single line only: `type(scope): brief description`. Imperative mood, under 72 ch
 text. Types: feat, fix, docs, style, refactor, perf, test, chore, ci. End with the Co-Authored-By
 line.
 
-### Pull requests
+### Shipping: push straight to `main`, no PRs
 
-- Branch off latest `origin/main`. Keep the branch rebased on `main` (`--force-with-lease`); never use
-  GitHub's "Update branch" merge commit. Never push to `main` directly.
-- The description has three sections: **What has changed**, **Context**, **Code changes** (one
-  pseudo-code block). No template checklists, no test plan.
-- Every PR gets a Vercel preview; open it and check the change there.
+- Work in a worktree off latest `origin/main`. When done: `git fetch`, `git rebase origin/main`,
+  `pnpm verify`, then `git push origin HEAD:main`. Each push is one Vercel production deploy.
+- A rejected push means `main` moved: rebase, re-run `pnpm verify`, push again. Never force-push `main`.
+- One logical change per commit, so one `git revert` undoes it.
+- After the push, confirm the Vercel deploy is green and the live page on https://ctaylor.dev shows the
+  change. A failed Vercel build leaves the last good deploy live; fix forward with a new commit.
+- CI runs on every push to `main` as a backstop. A red run on `main` is fixed before anything else ships.
+- Open a PR only when Chris asks to see a change before it goes live; it gets a Vercel preview.
 
 ## Commands
 

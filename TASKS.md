@@ -137,6 +137,7 @@ All legacy Next.js files deleted wholesale in one sweep:
       how to add content, deploy notes.
 - [x] **Reconcile CLAUDE.md** — rewritten for Astro 6, `ctaylor.dev` and the `career` collection, with
       `.claude/rules/`, `.mcp.json`, skills, `pnpm verify` and CI added (Almanac-style tooling).
+      Changes now ship straight to `main` with no PR (2026-11-11).
 - [ ] **Write README.md** — what the site is, how to run (`pnpm dev`), how to deploy.
 - [ ] **Document the content model** — the frontmatter shape for `projects` and `blog` so entries are
       trivial to add.
