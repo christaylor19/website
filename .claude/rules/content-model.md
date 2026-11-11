@@ -4,12 +4,12 @@ Content is MDX in collections under `src/content/`. Schemas live in `src/content
 
 ### Collections
 
-| Collection  | Folder                   | Required frontmatter                                     | Optional (default)                                                               |
-| ----------- | ------------------------ | -------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `projects`  | `src/content/projects/`  | `title`, `description`                                   | `tech` (`[]`), `url`, `repo`, `order` (999), `featured` (false), `draft` (false) |
-| `career`    | `src/content/career/`    | `org`, `role`, `from`, `to` (`number` or `'now'`)        | `location`, `url`, `order` (999)                                                 |
-| `blog`      | `src/content/blog/`      | `title`, `description`, `pubDate`                        | `updatedDate`, `tags` (`[]`), `draft` (false)                                    |
-| `interests` | `src/content/interests/` | `title`, `caption`, `credit`, `url`, `image`, `imageAlt` | `order` (999), `draft` (false)                                                   |
+| Collection  | Folder                   | Required frontmatter                                     | Optional (default)                                                |
+| ----------- | ------------------------ | -------------------------------------------------------- | ----------------------------------------------------------------- |
+| `projects`  | `src/content/projects/`  | `title`, `description`                                   | `url`, `repo`, `order` (999), `featured` (false), `draft` (false) |
+| `career`    | `src/content/career/`    | `org`, `role`, `from`, `to` (`number` or `'now'`)        | `location`, `url`, `order` (999)                                  |
+| `blog`      | `src/content/blog/`      | `title`, `description`, `pubDate`                        | `updatedDate`, `tags` (`[]`), `draft` (false)                     |
+| `interests` | `src/content/interests/` | `title`, `caption`, `credit`, `url`, `image`, `imageAlt` | `order` (999), `draft` (false)                                    |
 
 ### Adding an entry
 

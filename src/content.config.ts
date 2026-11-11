@@ -11,8 +11,6 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    // Tech stack, e.g. ['Astro', 'TypeScript', 'Tailwind'].
-    tech: z.array(z.string()).default([]),
     // Outbound links: live site, repo, etc. Label is optional display text.
     url: z.string().url().optional(),
     repo: z.string().url().optional(),
