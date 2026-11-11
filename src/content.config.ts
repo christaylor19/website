@@ -8,17 +8,20 @@ import { glob } from 'astro/loaders';
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    // Outbound links: live site, repo, etc. Label is optional display text.
-    url: z.string().url().optional(),
-    repo: z.string().url().optional(),
-    // Lower numbers sort first on the projects list. Unset = sorts last.
-    order: z.number().default(999),
-    featured: z.boolean().default(false),
-    draft: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      // Outbound links: live site, repo, etc. Label is optional display text.
+      url: z.string().url().optional(),
+      repo: z.string().url().optional(),
+      // Lower numbers sort first on the projects list. Unset = sorts last.
+      order: z.number().default(999),
+      featured: z.boolean().default(false),
+      draft: z.boolean().default(false),
+      image: image().optional(),
+      imageAlt: z.string().optional(),
+    }),
 });
 
 const career = defineCollection({
