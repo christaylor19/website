@@ -15,6 +15,32 @@ const facts = [
   ['Background', 'BSc Geography, Reading · MSc GIS, Edinburgh'],
 ];
 
+const setup = [
+  ['Agent', 'Claude Code'],
+  ['Terminal', 'cmux'],
+  ['Editor', 'Zed, for reading and reviewing'],
+];
+
+const principles = [
+  [
+    'Setup beats prompts.',
+    'A rough prompt in a well-set-up workspace beats a polished one in an empty workspace.',
+  ],
+  [
+    'Every fact has one home.',
+    "Rules, memory, notes and repo conventions each live in one place, so they don't drift.",
+  ],
+  ['Hooks enforce, memory advises.', 'Anything that must always happen is a hook, not a note.'],
+  [
+    'Check outcomes, not diffs.',
+    'CI, smoke tests and the live page tell you more than reading every line.',
+  ],
+  [
+    'Agents work in parallel.',
+    'Each one gets its own worktree and its own browser, and proves its work with screenshots.',
+  ],
+];
+
 const projects = (await getCollection('projects'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
@@ -107,6 +133,33 @@ const career = (await getCollection('career')).sort((a, b) => a.data.order - b.d
           }
         </tbody>
       </table>
+    </section>
+
+    <section id="how-i-work" class="mt-8">
+      <h2 class="text-muted mb-2 text-xs font-semibold tracking-wide uppercase">How I work</h2>
+      <p class="text-muted text-sm">
+        I do most of my work through Claude Code, and use the editor to read and review rather than
+        type.
+      </p>
+      <dl class="mt-3 grid grid-cols-[6rem_1fr] gap-x-3 gap-y-1 text-sm">
+        {
+          setup.map(([k, v]) => (
+            <>
+              <dt class="text-muted">{k}</dt>
+              <dd class="font-medium">{v}</dd>
+            </>
+          ))
+        }
+      </dl>
+      <ul class="mt-4 space-y-2 text-sm">
+        {
+          principles.map(([title, body]) => (
+            <li>
+              <span class="font-medium">{title}</span> <span class="text-muted">{body}</span>
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <section id="interests" class="mt-8">
