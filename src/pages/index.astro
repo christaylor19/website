@@ -78,46 +78,54 @@ const career = (await getCollection('career')).sort((a, b) => a.data.order - b.d
     <!-- Career table (dense rows → detail pages). First, above projects. -->
     <section id="career" class="mt-8">
       <h2 class="text-muted mb-2 text-xs font-semibold tracking-wide uppercase">Career</h2>
-      <table class="w-full text-sm">
-        <tbody>
-          {
-            career.map((c) =>
-              c.data.break ? (
-                <tr class="border-rule text-muted border-b">
-                  <td class="py-1.5 pr-3 whitespace-nowrap italic">{c.data.org}</td>
-                  <td class="py-1.5">{c.data.role}</td>
-                  <td class="hidden py-1.5 sm:table-cell" />
-                  <td class="tabular py-1.5 pl-2 text-right whitespace-nowrap">
-                    {c.data.from}–{c.data.to}
-                  </td>
-                  <td class="py-1.5 pl-2" />
-                </tr>
-              ) : (
-                <tr class="group border-rule hover:bg-surface border-b">
-                  <td class="py-1.5 pr-3 whitespace-nowrap">
-                    <a href={`/career/${c.id}`} class="text-accent font-medium">
+      <ul class="text-sm">
+        {
+          career.map((c) => {
+            const row =
+              'grid grid-cols-[5.75rem_1fr_4.75rem_0.75rem] items-baseline gap-x-2 border-b border-rule px-1 py-1.5 sm:grid-cols-[8.5rem_1fr_6rem_5.5rem_1rem] sm:gap-x-3 sm:px-2';
+            return (
+              <li>
+                {c.data.break ? (
+                  <div class={`${row} text-muted`}>
+                    <span class="whitespace-nowrap italic">{c.data.org}</span>
+                    <span>{c.data.role}</span>
+                    <span class="hidden sm:block" />
+                    <span class="tabular text-right whitespace-nowrap">
+                      {c.data.from}–{c.data.to}
+                    </span>
+                    <span />
+                  </div>
+                ) : (
+                  <a
+                    href={`/career/${c.id}`}
+                    class={`${row} group hover:bg-surface focus-visible:outline-accent rounded-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2`}
+                  >
+                    <span class="text-accent font-medium whitespace-nowrap group-hover:underline">
                       {c.data.org}
-                    </a>
-                  </td>
-                  <td class="text-muted py-1.5">
-                    {c.data.role}
-                    {city(c.data.location) && (
-                      <span class="block text-xs sm:hidden">{city(c.data.location)}</span>
-                    )}
-                  </td>
-                  <td class="text-muted hidden py-1.5 pr-3 sm:table-cell">
-                    {city(c.data.location)}
-                  </td>
-                  <td class="tabular text-muted py-1.5 pl-2 text-right whitespace-nowrap">
-                    {c.data.from}–{c.data.to}
-                  </td>
-                  <td class="text-muted group-hover:text-accent py-1.5 pl-2 text-right">→</td>
-                </tr>
-              ),
-            )
-          }
-        </tbody>
-      </table>
+                    </span>
+                    <span class="text-muted">
+                      {c.data.role}
+                      {city(c.data.location) && (
+                        <span class="block text-xs sm:hidden">{city(c.data.location)}</span>
+                      )}
+                    </span>
+                    <span class="text-muted hidden sm:block">{city(c.data.location)}</span>
+                    <span class="tabular text-muted text-right whitespace-nowrap">
+                      {c.data.from}–{c.data.to}
+                    </span>
+                    <span
+                      class="text-muted group-hover:text-accent text-right motion-safe:transition-transform motion-safe:group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </a>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
     </section>
 
     <!-- Projects table (dense repeating rows → detail pages) -->
