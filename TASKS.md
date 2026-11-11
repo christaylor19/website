@@ -107,11 +107,8 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
       verify the Twitter/X handle and email are current.
 - [ ] **Project data model** — projects as content-collection entries (MDX) or a typed data file.
       Lean toward content collection for consistency with blog.
-- [ ] **GitHub commit grid → real widget** — `CommitGrid.astro` currently renders a static SVG from
-      DETERMINISTIC PLACEHOLDER data. Make it a real widget driven by actual GitHub contributions.
-      Options: (a) GitHub GraphQL `contributionsCollection` at build time (needs a `GITHUB_TOKEN` env
-      var — add it to the now-clean Vercel project), or (b) an unofficial contributions API fetched at
-      build. Keep it static-rendered (zero client JS) — fetch at build, not in the browser.
+- [x] **GitHub commit grid** — DROPPED (2026-11-11). It showed placeholder data and Chris doesn't
+      want a commit grid on the site. `CommitGrid.astro` deleted.
 
 ### 3. Remove Cruft (old Next.js site) — DONE (2026-06-18)
 
