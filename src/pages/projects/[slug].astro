@@ -14,7 +14,7 @@ const { Content } = await render(project);
 const { title, description, url, repo } = project.data;
 ---
 
-<BaseLayout title={`${title} — Chris Taylor`} description={description}>
+<BaseLayout title={`${title} — Chris Taylor`} description={description} type="article">
   <main class="mx-auto max-w-2xl px-5 py-12">
     <!-- Breadcrumb (SofaScore entity path) -->
     <nav class="text-muted text-xs">
