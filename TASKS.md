@@ -23,6 +23,9 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
   keeping three sources in sync.
 - **Content sections** — About/intro (incl. a note on setup/tooling), Projects, Writing/blog,
   Links/contact. A dedicated "uses"/setup page is optional — fold into intro initially.
+- **Interests page** _(decided 2026-11-11)_ — `/interests`, linked from the homepage. Holds
+  creative and personal work, starting with the transport and map visualisations. Not under Projects
+  or Career. Almanac is a separate project and stays out of it.
 - **Domain: `ctaylor.dev`** _(purchased; served by Vercel, the apex redirects to `www`)_ — set as `site` in `astro.config.mjs`. Note CLAUDE.md
   still refers to the site as "chris.dev"; reconcile once the domain is confirmed. `.dev` is
   HSTS-preloaded so HTTPS is mandatory — Vercel issues certs automatically on domain connect.
@@ -96,6 +99,10 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
       which are public/worth showing.
 - [ ] **Writing / blog** — MDX posts in a `blog` content collection. Seed with 1 post so the section
       isn't empty (e.g. "rebuilding my site in Astro").
+- [ ] **Interests page** — build `/interests` and a homepage link to it. Launch set: NYC Neighbourhood
+      Map, Amtrak Network Atlas, HS2 Phase One Structures (claude.ai artifacts Chris makes public
+      after their fixes). Each gets a static image (Astro `<Image />`) linking to the live artifact, a
+      one-line caption and a data credit. Copy needs Chris's approval before it ships.
 - [ ] **Links / contact** — GitHub, LinkedIn (as the CV link), email. Update from `data/links.tsx`:
       verify the Twitter/X handle and email are current.
 - [ ] **Project data model** — projects as content-collection entries (MDX) or a typed data file.
