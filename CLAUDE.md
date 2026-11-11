@@ -32,6 +32,9 @@ happens.
 - **No inline comments** in code you write. Rationale goes in the PR description. Don't remove
   existing comments unless asked.
 - **Content lives in collections**, not JSX. See `.claude/rules/content-model.md`.
+- **Chris approves all copy before it ships.** Draft new or changed site copy (intro, career, projects,
+  posts, gallery captions) in chat first, one section at a time. Commit and push only after he approves
+  that section. Code, dependency and tooling changes are not covered by this rule.
 - **Check the result in a real browser** at desktop and mobile widths, light and dark, before calling a
   UI change done.
 

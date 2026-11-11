@@ -18,7 +18,8 @@ Chris steers; Claude orchestrates small PRs that deploy to ctaylor.dev through V
 
 | Kind                      | Action                                                            |
 | ------------------------- | ----------------------------------------------------------------- |
-| Small fix or copy change  | Do it now in a worktree                                           |
+| Small fix                 | Do it now in a worktree                                           |
+| Copy change               | Draft it in chat, ship after Chris approves                       |
 | Idea for later            | Add it to the `TASKS.md` Backlog with enough detail to build from |
 | New page or big UI change | Artifact mockup first; build after approval                       |
 | Display detail            | Decide and ship, report after                                     |
