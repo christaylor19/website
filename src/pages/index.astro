@@ -121,30 +121,32 @@ const career = (await getCollection('career')).sort((a, b) => a.data.order - b.d
     </section>
 
     <!-- Projects table (dense repeating rows → detail pages) -->
-    <section id="projects" class="mt-8">
-      <h2 class="text-muted mb-2 text-xs font-semibold tracking-wide uppercase">Projects</h2>
-      <table class="w-full text-sm">
-        <tbody>
-          {
-            projects.map((p) => (
-              <tr class="group border-rule hover:bg-surface border-b">
-                <td class="py-1.5">
-                  <a href={`/projects/${p.id}`} class="text-accent font-medium">
-                    {p.data.title}
-                  </a>
-                </td>
-                <td class="py-1.5 text-right">
-                  {p.data.featured && (
-                    <span class="text-good rounded-xs px-1.5 text-xs font-medium">featured</span>
-                  )}
-                </td>
-                <td class="text-muted group-hover:text-accent py-1.5 pl-2 text-right">→</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-    </section>
+    {
+      projects.length > 0 && (
+        <section id="projects" class="mt-8">
+          <h2 class="text-muted mb-2 text-xs font-semibold tracking-wide uppercase">Projects</h2>
+          <table class="w-full text-sm">
+            <tbody>
+              {projects.map((p) => (
+                <tr class="group border-rule hover:bg-surface border-b">
+                  <td class="py-1.5">
+                    <a href={`/projects/${p.id}`} class="text-accent font-medium">
+                      {p.data.title}
+                    </a>
+                  </td>
+                  <td class="py-1.5 text-right">
+                    {p.data.featured && (
+                      <span class="text-good rounded-xs px-1.5 text-xs font-medium">featured</span>
+                    )}
+                  </td>
+                  <td class="text-muted group-hover:text-accent py-1.5 pl-2 text-right">→</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )
+    }
 
     <section id="how-i-work" class="mt-8">
       <h2 class="text-muted mb-2 text-xs font-semibold tracking-wide uppercase">How I work</h2>
