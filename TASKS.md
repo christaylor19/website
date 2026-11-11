@@ -109,6 +109,12 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
       Lean toward content collection for consistency with blog.
 - [x] **GitHub commit grid** — DROPPED (2026-11-11). It showed placeholder data and Chris doesn't
       want a commit grid on the site. `CommitGrid.astro` deleted.
+- [ ] **Projects: name and explain them** — rename `sport-project` to Almanac; give Almanac and HN
+      Monthly Top a short page explaining the idea plus links to the live site and repo. Needs
+      Almanac's one-liner and live URL from Chris. HN Monthly Top is offline until Chris migrates it.
+- [ ] **GitHub profile tidy-up** _(parked)_ — the profile README is empty; pins show an archived
+      template and a contributed repo. Write a short README linking to ctaylor.dev, re-pick pins
+      (public repos only), and decide whether the email stays public.
 
 ### 3. Remove Cruft (old Next.js site) — DONE (2026-06-18)
 
