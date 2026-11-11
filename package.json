@@ -25,10 +25,10 @@
     "node": ">=22"
   },
   "dependencies": {
-    "astro": "^7.1.6"
+    "astro": "^7.4.10"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
+    "@astrojs/check": "^0.9.12",
     "@astrojs/mdx": "^7.0.5",
     "@eslint/js": "10.0.1",
     "@fontsource/rubik": "^5.1.0",
@@ -53,9 +53,15 @@
     "overrides": {
       "postcss": "^8.5.25",
       "sharp": "^0.35.5",
-      "svgo": "^4.0.2",
+      "svgo": "^4.1.0",
       "fast-uri": "^3.1.9",
-      "brace-expansion": "^5.0.7"
+      "brace-expansion": "^5.0.12",
+      "nanoid@3": "^3.3.18",
+      "js-yaml@4": "^4.3.2",
+      "smol-toml": "^1.9.0",
+      "source-map-js": "^1.2.2",
+      "postcss-selector-parser@7": "^7.1.6",
+      "minimatch@10": "^11.0.1"
     }
   }
 }
