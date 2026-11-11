@@ -11,8 +11,8 @@ const facts = [
   ['Role', 'Senior Frontend Engineer'],
   ['Company', 'ClearScore'],
   ['Based', 'London, UK'],
-  ['Stack', 'TypeScript · Fastify · SQL'],
-  ['Background', 'MSc GIS, Edinburgh'],
+  ['Stack', 'TypeScript · React · Node · server-driven UI'],
+  ['Background', 'BSc Geography, Reading · MSc GIS, Edinburgh'],
 ];
 
 const projects = (await getCollection('projects'))
@@ -24,9 +24,6 @@ const interests = (await getCollection('interests'))
   .sort((a, b) => a.data.order - b.data.order);
 
 const career = (await getCollection('career')).sort((a, b) => a.data.order - b.data.order);
-
-const lorem =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 ---
 
 <BaseLayout title="Chris Taylor">
@@ -34,7 +31,10 @@ const lorem =
     <!-- Identity panel (PCS rider info block) -->
     <header class="border-rule border-b pb-6">
       <h1 class="text-2xl font-bold tracking-tight">Chris Taylor</h1>
-      <p class="text-muted mt-1 text-sm">{lorem}</p>
+      <p class="text-muted mt-1 text-sm">
+        Frontend engineer in London. I build the web side of ClearScore, from React apps to the
+        server-driven services behind them. Outside work it's maps, sport and transport data.
+      </p>
       <dl class="mt-4 grid grid-cols-[6rem_1fr] gap-x-3 gap-y-1 text-sm">
         {
           facts.map(([k, v]) => (
