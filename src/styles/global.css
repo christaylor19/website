@@ -28,6 +28,8 @@
   --accent: oklch(0.52 0.07 185); /* muted teal */
   --good: oklch(0.55 0.09 150);
   --bad: oklch(0.55 0.13 40);
+  --line-study: oklch(0.7 0.02 75);
+  --line-break: oklch(0.72 0.13 70);
   /* Heat scale for data cells (commit grid, etc.): empty → green → amber. */
   --heat-0: oklch(0.93 0.008 85); /* near-base, "no activity" */
   --heat-1: oklch(0.82 0.07 160);
@@ -42,6 +44,8 @@
   --muted: oklch(0.65 0.012 85);
   --rule: oklch(0.32 0.012 230);
   --accent: oklch(0.7 0.09 185);
+  --line-study: oklch(0.5 0.015 230);
+  --line-break: oklch(0.75 0.13 70);
   --heat-0: oklch(0.28 0.012 230);
   --heat-1: oklch(0.4 0.08 160);
   --heat-2: oklch(0.55 0.11 150);

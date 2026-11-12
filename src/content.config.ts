@@ -1,5 +1,5 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 
 // Content collections — the source of truth for projects and blog posts.
 // Entries are MDX files with frontmatter validated against these schemas at
@@ -66,4 +66,12 @@ const interests = defineCollection({
     }),
 });
 
-export const collections = { projects, career, blog, interests };
+const education = defineCollection({
+  loader: file('./src/content/education.json'),
+  schema: z.object({
+    name: z.string(),
+    from: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
+  }),
+});
+
+export const collections = { projects, career, blog, interests, education };

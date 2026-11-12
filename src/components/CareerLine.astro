@@ -1,0 +1,228 @@
+---
+import { getCollection } from 'astro:content';
+
+type Kind = 'study' | 'work' | 'now';
+interface Stop {
+  kind: Kind;
+  label: string;
+  year: string;
+  href?: string;
+  breakBefore: boolean;
+}
+
+const education = (await getCollection('education')).sort((a, b) =>
+  a.data.from.localeCompare(b.data.from),
+);
+const career = (await getCollection('career')).sort((a, b) =>
+  a.data.from.localeCompare(b.data.from),
+);
+
+const stops: Stop[] = education.map((e) => ({
+  kind: 'study',
+  label: e.data.name,
+  year: e.data.from.slice(0, 4),
+  breakBefore: false,
+}));
+let pendingBreak = false;
+for (const c of career) {
+  if (c.data.break) {
+    pendingBreak = true;
+    continue;
+  }
+  stops.push({
+    kind: 'work',
+    label: c.data.org,
+    year: c.data.from.slice(0, 4),
+    href: `/career/${c.id}`,
+    breakBefore: pendingBreak,
+  });
+  pendingBreak = false;
+}
+stops.push({ kind: 'now', label: 'now', year: 'now', breakBefore: pendingBreak });
+
+const place = (start: number, end: number) => {
+  const weights = stops.slice(1).map((s) => (s.breakBefore ? 1.3 : 1));
+  const unit = (end - start) / weights.reduce((sum, w) => sum + w, 0);
+  const positions = [start];
+  weights.forEach((w, i) => positions.push((positions.at(i) ?? start) + w * unit));
+  return positions;
+};
+
+const xs = place(24, 612);
+const ys = place(16, 256);
+const last = stops.length - 1;
+const colour = (kind: Kind) => (kind === 'study' ? 'var(--line-study)' : 'var(--accent)');
+const segments = stops.slice(1).map((s, i) => ({
+  i,
+  breakBefore: s.breakBefore,
+  stroke: colour(stops.at(i)?.kind ?? 'work'),
+}));
+const label = 'Career line: study at Reading and Edinburgh, then each job in order to now';
+---
+
+<div class="mb-3">
+  <svg class="hidden w-full sm:block" viewBox="0 0 640 96" role="img" aria-label={label}>
+    <g fill="none" stroke-linecap="round" stroke-width="6">
+      {
+        segments.map(({ i, breakBefore, stroke }) => {
+          const a = xs.at(i) ?? 0;
+          const b = xs.at(i + 1) ?? 0;
+          const mid = a + (b - a) * 0.3;
+          return breakBefore ? (
+            <>
+              <path d={`M${a} 48H${mid}`} stroke={stroke} />
+              <path d={`M${mid} 48H${b}`} stroke="var(--line-break)" stroke-dasharray="2 10" />
+            </>
+          ) : (
+            <path d={`M${a} 48H${b}`} stroke={stroke} />
+          );
+        })
+      }
+    </g>
+    {
+      segments
+        .filter((s) => s.breakBefore)
+        .map(({ i }) => {
+          const a = xs.at(i) ?? 0;
+          const b = xs.at(i + 1) ?? 0;
+          return (
+            <text
+              x={a + (b - a) * 0.62}
+              y="76"
+              text-anchor="middle"
+              class="fill-muted text-[11px] italic"
+            >
+              break
+            </text>
+          );
+        })
+    }
+    {
+      stops.map((s, i) => {
+        const x = xs.at(i) ?? 0;
+        const anchor = i === 0 ? 'start' : i === last ? 'end' : 'middle';
+        const lx = i === 0 ? x - 6 : i === last ? x + 8 : x;
+        if (s.kind === 'now') {
+          return (
+            <>
+              <circle cx={x} cy="48" r="9" fill="var(--accent)" />
+              <circle cx={x} cy="48" r="4" fill="var(--base)" />
+              <text x={lx} y="76" text-anchor={anchor} class="fill-muted text-[11px]">
+                now
+              </text>
+            </>
+          );
+        }
+        const body = (
+          <>
+            <circle
+              cx={x}
+              cy="48"
+              r="7"
+              fill="var(--base)"
+              stroke={colour(s.kind)}
+              stroke-width="3.5"
+            />
+            <text
+              x={lx}
+              y="28"
+              text-anchor={anchor}
+              class={`text-[12.5px] font-semibold ${s.href ? 'fill-accent group-hover:underline' : 'fill-ink'}`}
+            >
+              {s.label}
+            </text>
+            <text x={lx} y="76" text-anchor={anchor} class="fill-muted tabular text-[11px]">
+              {s.year}
+            </text>
+          </>
+        );
+        return s.href ? (
+          <a href={s.href} class="group">
+            {body}
+          </a>
+        ) : (
+          body
+        );
+      })
+    }
+  </svg>
+
+  <svg class="w-full sm:hidden" viewBox="0 0 320 272" role="img" aria-label={label}>
+    <g fill="none" stroke-linecap="round" stroke-width="6">
+      {
+        segments.map(({ i, breakBefore, stroke }) => {
+          const a = ys.at(i) ?? 0;
+          const b = ys.at(i + 1) ?? 0;
+          const mid = a + (b - a) * 0.3;
+          return breakBefore ? (
+            <>
+              <path d={`M40 ${a}V${mid}`} stroke={stroke} />
+              <path d={`M40 ${mid}V${b}`} stroke="var(--line-break)" stroke-dasharray="2 10" />
+            </>
+          ) : (
+            <path d={`M40 ${a}V${b}`} stroke={stroke} />
+          );
+        })
+      }
+    </g>
+    {
+      segments
+        .filter((s) => s.breakBefore)
+        .map(({ i }) => {
+          const a = ys.at(i) ?? 0;
+          const b = ys.at(i + 1) ?? 0;
+          return (
+            <text x="64" y={a + (b - a) * 0.6} class="fill-muted text-[11px] italic">
+              Career break
+            </text>
+          );
+        })
+    }
+    {
+      stops.map((s, i) => {
+        const y = ys.at(i) ?? 0;
+        if (s.kind === 'now') {
+          return (
+            <>
+              <circle cx="40" cy={y} r="9" fill="var(--accent)" />
+              <circle cx="40" cy={y} r="4" fill="var(--base)" />
+              <text x="64" y={y + 4} class="fill-muted text-[11px]">
+                now
+              </text>
+            </>
+          );
+        }
+        const body = (
+          <>
+            <circle
+              cx="40"
+              cy={y}
+              r="7"
+              fill="var(--base)"
+              stroke={colour(s.kind)}
+              stroke-width="3.5"
+            />
+            <text
+              x="64"
+              y={y + 4}
+              class={`text-[12.5px] font-semibold ${s.href ? 'fill-accent group-hover:underline' : 'fill-ink'}`}
+            >
+              {s.label}
+            </text>
+            <text x="300" y={y + 4} text-anchor="end" class="fill-muted tabular text-[11px]">
+              {s.year}
+            </text>
+          </>
+        );
+        return s.href ? (
+          <a href={s.href} class="group">
+            {body}
+          </a>
+        ) : (
+          body
+        );
+      })
+    }
+  </svg>
+  <p class="text-muted mt-1 text-xs">Grey: study · Teal: work · Dotted: career break</p>
+</div>
