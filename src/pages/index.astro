@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import { dateSpan } from '../lib/dates';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 // PROTOTYPE content. Real CV facts where known; Lorem Ipsum for any prose.
@@ -82,16 +83,21 @@ const career = (await getCollection('career')).sort((a, b) => a.data.order - b.d
         {
           career.map((c) => {
             const row =
-              'grid grid-cols-[5.75rem_1fr_4.75rem_0.75rem] items-baseline gap-x-2 border-b border-rule px-1 py-1.5 sm:grid-cols-[8.5rem_1fr_6rem_5.5rem_1rem] sm:gap-x-3 sm:px-2';
+              'grid grid-cols-[5.75rem_1fr_0.75rem] items-baseline gap-x-2 border-b border-rule px-1 py-1.5 sm:grid-cols-[7.5rem_1fr_4.5rem_9rem_1rem] sm:gap-x-3 sm:px-2';
             return (
               <li>
                 {c.data.break ? (
                   <div class={`${row} text-muted`}>
                     <span class="whitespace-nowrap italic">{c.data.org}</span>
-                    <span>{c.data.role}</span>
+                    <span>
+                      {c.data.role}
+                      <span class="tabular block text-xs sm:hidden">
+                        {dateSpan(c.data.from, c.data.to)}
+                      </span>
+                    </span>
                     <span class="hidden sm:block" />
-                    <span class="tabular text-right whitespace-nowrap">
-                      {c.data.from}–{c.data.to}
+                    <span class="tabular hidden text-right whitespace-nowrap sm:block">
+                      {dateSpan(c.data.from, c.data.to)}
                     </span>
                     <span />
                   </div>
@@ -105,13 +111,15 @@ const career = (await getCollection('career')).sort((a, b) => a.data.order - b.d
                     </span>
                     <span class="text-muted">
                       {c.data.role}
-                      {city(c.data.location) && (
-                        <span class="block text-xs sm:hidden">{city(c.data.location)}</span>
-                      )}
+                      <span class="tabular block text-xs sm:hidden">
+                        {[city(c.data.location), dateSpan(c.data.from, c.data.to)]
+                          .filter(Boolean)
+                          .join(' · ')}
+                      </span>
                     </span>
                     <span class="text-muted hidden sm:block">{city(c.data.location)}</span>
-                    <span class="tabular text-muted text-right whitespace-nowrap">
-                      {c.data.from}–{c.data.to}
+                    <span class="tabular text-muted hidden text-right whitespace-nowrap sm:block">
+                      {dateSpan(c.data.from, c.data.to)}
                     </span>
                     <span
                       class="text-muted group-hover:text-accent text-right motion-safe:transition-transform motion-safe:group-hover:translate-x-0.5"

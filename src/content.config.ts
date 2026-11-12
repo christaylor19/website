@@ -29,9 +29,9 @@ const career = defineCollection({
   schema: z.object({
     org: z.string(),
     role: z.string(),
-    // Year (or 'now' for current). Kept as string so 'now' is valid.
-    from: z.coerce.number(),
-    to: z.union([z.coerce.number(), z.literal('now')]),
+    // Year and month as 'YYYY-MM' (or 'now' for current).
+    from: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
+    to: z.union([z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/), z.literal('now')]),
     location: z.string().optional(),
     url: z.string().url().optional(),
     order: z.number().default(999),

@@ -3,6 +3,7 @@
 // "more" detail lives, keeping the homepage a lean hub (LinkedIn stays the full CV).
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { dateSpan } from '../../lib/dates';
 
 export async function getStaticPaths() {
   const roles = (await getCollection('career')).filter((r) => !r.data.break);
@@ -16,7 +17,7 @@ const { org, role: title, from, to, location, url } = role.data;
 
 <BaseLayout
   title={`${title} · ${org} — Chris Taylor`}
-  description={`${title} at ${org}, ${from}–${to}.`}
+  description={`${title} at ${org}, ${dateSpan(from, to)}.`}
   type="article"
 >
   <main class="mx-auto max-w-2xl px-5 py-12">
@@ -32,7 +33,7 @@ const { org, role: title, from, to, location, url } = role.data;
       <h1 class="text-2xl font-bold tracking-tight">{org}</h1>
       <p class="text-muted mt-1 text-sm">{title}</p>
       <p class="tabular text-muted mt-2 text-xs">
-        {from}–{to}{location && ` · ${location}`}
+        {dateSpan(from, to)}{location && ` · ${location}`}
         {
           url && (
             <a href={url} class="text-accent ml-2">
