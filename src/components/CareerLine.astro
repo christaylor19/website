@@ -49,7 +49,6 @@ const place = (start: number, end: number) => {
 };
 
 const xs = place(24, 612);
-const ys = place(16, 256);
 const last = stops.length - 1;
 const colour = (kind: Kind) => (kind === 'study' ? 'var(--line-study)' : 'var(--accent)');
 const segments = stops.slice(1).map((s, i) => ({
@@ -60,9 +59,9 @@ const segments = stops.slice(1).map((s, i) => ({
 const label = 'Career line: study at Reading and Edinburgh, then each job in order to now';
 ---
 
-<div class="mb-3">
-  <svg class="hidden w-full sm:block" viewBox="0 0 640 96" role="img" aria-label={label}>
-    <g fill="none" stroke-linecap="round" stroke-width="6">
+<div class="mb-2 hidden sm:block">
+  <svg class="w-full" viewBox="0 0 640 80" role="img" aria-label={label}>
+    <g fill="none" stroke-linecap="round" stroke-width="4">
       {
         segments.map(({ i, breakBefore, stroke }) => {
           const a = xs.at(i) ?? 0;
@@ -70,11 +69,11 @@ const label = 'Career line: study at Reading and Edinburgh, then each job in ord
           const mid = a + (b - a) * 0.3;
           return breakBefore ? (
             <>
-              <path d={`M${a} 48H${mid}`} stroke={stroke} />
-              <path d={`M${mid} 48H${b}`} stroke="var(--line-break)" stroke-dasharray="2 10" />
+              <path d={`M${a} 40H${mid}`} stroke={stroke} />
+              <path d={`M${mid} 40H${b}`} stroke="var(--line-break)" stroke-dasharray="1.5 8" />
             </>
           ) : (
-            <path d={`M${a} 48H${b}`} stroke={stroke} />
+            <path d={`M${a} 40H${b}`} stroke={stroke} />
           );
         })
       }
@@ -88,9 +87,9 @@ const label = 'Career line: study at Reading and Edinburgh, then each job in ord
           return (
             <text
               x={a + (b - a) * 0.62}
-              y="76"
+              y="64"
               text-anchor="middle"
-              class="fill-muted text-[11px] italic"
+              class="fill-muted text-[10px] italic"
             >
               break
             </text>
@@ -105,9 +104,9 @@ const label = 'Career line: study at Reading and Edinburgh, then each job in ord
         if (s.kind === 'now') {
           return (
             <>
-              <circle cx={x} cy="48" r="9" fill="var(--accent)" />
-              <circle cx={x} cy="48" r="4" fill="var(--base)" />
-              <text x={lx} y="76" text-anchor={anchor} class="fill-muted text-[11px]">
+              <circle cx={x} cy="40" r="7" fill="var(--accent)" />
+              <circle cx={x} cy="40" r="3" fill="var(--base)" />
+              <text x={lx} y="64" text-anchor={anchor} class="fill-muted text-[10px]">
                 now
               </text>
             </>
@@ -117,21 +116,21 @@ const label = 'Career line: study at Reading and Edinburgh, then each job in ord
           <>
             <circle
               cx={x}
-              cy="48"
-              r="7"
+              cy="40"
+              r="5"
               fill="var(--base)"
               stroke={colour(s.kind)}
-              stroke-width="3.5"
+              stroke-width="3"
             />
             <text
               x={lx}
-              y="28"
+              y="24"
               text-anchor={anchor}
-              class={`text-[12.5px] font-semibold ${s.href ? 'fill-accent group-hover:underline' : 'fill-ink'}`}
+              class={`text-[11.5px] font-medium ${s.href ? 'fill-accent group-hover:underline' : 'fill-ink'}`}
             >
               {s.label}
             </text>
-            <text x={lx} y="76" text-anchor={anchor} class="fill-muted tabular text-[11px]">
+            <text x={lx} y="64" text-anchor={anchor} class="fill-muted tabular text-[10px]">
               {s.year}
             </text>
           </>
@@ -146,83 +145,4 @@ const label = 'Career line: study at Reading and Edinburgh, then each job in ord
       })
     }
   </svg>
-
-  <svg class="w-full sm:hidden" viewBox="0 0 320 272" role="img" aria-label={label}>
-    <g fill="none" stroke-linecap="round" stroke-width="6">
-      {
-        segments.map(({ i, breakBefore, stroke }) => {
-          const a = ys.at(i) ?? 0;
-          const b = ys.at(i + 1) ?? 0;
-          const mid = a + (b - a) * 0.3;
-          return breakBefore ? (
-            <>
-              <path d={`M40 ${a}V${mid}`} stroke={stroke} />
-              <path d={`M40 ${mid}V${b}`} stroke="var(--line-break)" stroke-dasharray="2 10" />
-            </>
-          ) : (
-            <path d={`M40 ${a}V${b}`} stroke={stroke} />
-          );
-        })
-      }
-    </g>
-    {
-      segments
-        .filter((s) => s.breakBefore)
-        .map(({ i }) => {
-          const a = ys.at(i) ?? 0;
-          const b = ys.at(i + 1) ?? 0;
-          return (
-            <text x="64" y={a + (b - a) * 0.6} class="fill-muted text-[11px] italic">
-              Career break
-            </text>
-          );
-        })
-    }
-    {
-      stops.map((s, i) => {
-        const y = ys.at(i) ?? 0;
-        if (s.kind === 'now') {
-          return (
-            <>
-              <circle cx="40" cy={y} r="9" fill="var(--accent)" />
-              <circle cx="40" cy={y} r="4" fill="var(--base)" />
-              <text x="64" y={y + 4} class="fill-muted text-[11px]">
-                now
-              </text>
-            </>
-          );
-        }
-        const body = (
-          <>
-            <circle
-              cx="40"
-              cy={y}
-              r="7"
-              fill="var(--base)"
-              stroke={colour(s.kind)}
-              stroke-width="3.5"
-            />
-            <text
-              x="64"
-              y={y + 4}
-              class={`text-[12.5px] font-semibold ${s.href ? 'fill-accent group-hover:underline' : 'fill-ink'}`}
-            >
-              {s.label}
-            </text>
-            <text x="300" y={y + 4} text-anchor="end" class="fill-muted tabular text-[11px]">
-              {s.year}
-            </text>
-          </>
-        );
-        return s.href ? (
-          <a href={s.href} class="group">
-            {body}
-          </a>
-        ) : (
-          body
-        );
-      })
-    }
-  </svg>
-  <p class="text-muted mt-1 text-xs">Grey: study · Teal: work · Dotted: career break</p>
 </div>
