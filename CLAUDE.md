@@ -59,15 +59,16 @@ line.
 
 ## Commands
 
-| Command        | Purpose                                  |
-| -------------- | ---------------------------------------- |
-| `pnpm dev`     | Dev server at http://localhost:4321      |
-| `pnpm build`   | Production build to `dist/`              |
-| `pnpm preview` | Serve the production build               |
-| `pnpm check`   | `astro check`: types and content schemas |
-| `pnpm lint`    | ESLint                                   |
-| `pnpm format`  | Prettier                                 |
-| `pnpm verify`  | Lint changed files, check, build         |
+| Command        | Purpose                                      |
+| -------------- | -------------------------------------------- |
+| `pnpm dev`     | Dev server at http://localhost:4321          |
+| `pnpm build`   | Production build to `dist/`                  |
+| `pnpm preview` | Serve the production build                   |
+| `pnpm check`   | `astro check`: types and content schemas     |
+| `pnpm lint`    | ESLint                                       |
+| `pnpm format`  | Prettier                                     |
+| `pnpm verify`  | Lint changed files, check, build             |
+| `pnpm cv`      | Rebuild `public/cv.pdf` from `scripts/cv.ts` |
 
 ## Reference Docs
 

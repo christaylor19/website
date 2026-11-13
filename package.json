@@ -19,7 +19,8 @@
     "format": "prettier --write .",
     "verify": "bash scripts/verify.sh",
     "lint": "eslint .",
-    "prepare": "lefthook install"
+    "prepare": "lefthook install",
+    "cv": "node --experimental-strip-types scripts/cv.ts"
   },
   "engines": {
     "node": ">=22"
@@ -38,6 +39,7 @@
     "eslint-plugin-astro": "1.7.0",
     "jiti": "2.7.0",
     "lefthook": "2.1.9",
+    "playwright": "1.63.0",
     "prettier": "3.8.4",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.8.0",
