@@ -1,6 +1,6 @@
 # Website — Tasks
 
-A full rebuild of chris.dev from scratch. The current site is a 2-year-old Next.js 12 Pages Router
+A full rebuild of ctaylor.dev from scratch. The current site is a 2-year-old Next.js 12 Pages Router
 personal site with a single half-built page. Goal: modern, lean, LLM-friendly, easy to maintain.
 
 ---
@@ -26,8 +26,7 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
 - **Interests section** _(decided 2026-11-11)_ — a gallery on the homepage, not a subpage. Holds
   creative and personal work, starting with the transport and map visualisations. Not under Projects
   or Career. Almanac is a separate project and stays out of it.
-- **Domain: `ctaylor.dev`** _(purchased; served by Vercel, the apex redirects to `www`)_ — set as `site` in `astro.config.mjs`. Note CLAUDE.md
-  still refers to the site as "chris.dev"; reconcile once the domain is confirmed. `.dev` is
+- **Domain: `ctaylor.dev`** _(purchased; served by Vercel, the apex redirects to `www`)_ — set as `site` in `astro.config.ts`. `.dev` is
   HSTS-preloaded so HTTPS is mandatory — Vercel issues certs automatically on domain connect.
 - **Deploy: Vercel** _(confirmed)_ — static output, no adapter (Vercel auto-detects Astro). Add
   `@astrojs/vercel` only if SSR/ISR is ever needed.
@@ -51,7 +50,7 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
       `src/styles/global.css`. No raw TTFs. (Astro 6's built-in `astro:fonts` API is now stable and
       could replace this later — see backlog note.)
 - [x] **Dark mode** — inline pre-paint theme script in `BaseLayout.astro` sets `.dark` on `<html>`
-      from `localStorage` / `prefers-color-scheme`. No React Context. Toggle UI still TODO.
+      from `localStorage` / `prefers-color-scheme`. No React Context. Toggle UI optional: the site follows the system setting, which is fine for now.
 - [x] **Git hooks: Lefthook** _(replaces husky + lint-staged)_ — single Go binary, parallel hooks,
       built-in staged-files globbing so lint-staged isn't needed. `lefthook.yml` runs Prettier
       (`--write`, stages fixes) + ESLint on staged files. Installed via `prepare` script. Hook
@@ -60,8 +59,7 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
       `@eslint/js` + `typescript-eslint` + `eslint-plugin-astro` `flat/recommended`. Dropped airbnb.
       `prettier.config.ts` with `prettier-plugin-astro` + `prettier-plugin-tailwindcss`. Both run
       clean on `src/`. **a11y caveat below.**
-- [ ] **Vercel deploy** — connect Git for auto-deploy. Static output, no adapter needed unless
-      SSR/ISR is later required. _(Only remaining task-1 item.)_
+- [x] **Vercel deploy** — every push to `main` deploys to production.
 
 **Notes / deviations from original plan:**
 
@@ -73,8 +71,8 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
 - **All config is TypeScript:** `astro.config.ts`, `eslint.config.ts`, `prettier.config.ts`.
 - **a11y rules omitted:** `eslint-plugin-astro@1.7.0`'s `flat/jsx-a11y-recommended` ships the bundled
   `jsx-a11y` plugin in legacy array shape, which **ESLint 10** rejects. Either pin ESLint 9 to keep
-  a11y, or wait for an ESLint-10-compatible release. Documented in `eslint.config.ts`. **DECISION
-  NEEDED** (see below) — currently on ESLint 10 without a11y.
+  a11y, or wait for an ESLint-10-compatible release. Documented in `eslint.config.ts`. **Still
+  open** — currently on ESLint 10 without a11y; pages are checked in the browser instead.
 - Tailwind v4 uses the Vite plugin + `@import "tailwindcss"`, not `@astrojs/tailwind` (v3-era).
 - Content config path is `src/content.config.ts` (v5+), not `src/content/config.ts` (v2–v4).
 - Deleted legacy `postcss.config.js` + `tailwind.config.js` (CommonJS crashed under `"type":
@@ -91,28 +89,33 @@ personal site with a single half-built page. Goal: modern, lean, LLM-friendly, e
 
 ### 2. Content
 
-- [ ] **About / intro** — short 1–2 sentence intro. Include a brief note on setup/tooling (editor,
+- [x] **About / intro** — DONE (2026-11-12). Intro, facts, career line and a How I work section with
+      setup and process. short 1–2 sentence intro. Include a brief note on setup/tooling (editor,
       terminal, daily-driver stack). No wall of text.
-- [ ] **Projects** — real, current projects with links + descriptions + tech stack. Replace the stale
+- [x] **Projects** — DONE (2026-11-13). Almanac and HN Monthly Top, each with a page, screenshot, live
+      link and repo. Original note: real, current projects with links + descriptions + tech stack. Replace the stale
       "Prem Visualiser". Candidates from local repos: `hn-monthly-top`, `sport-project`,
       `homebrew-sport-tui`, `spotify-playlister`, `wiki-scraper`, `figma-exports`, this site. Audit
       which are public/worth showing.
-- [ ] **Writing / blog** — MDX posts in a `blog` content collection. Seed with 1 post so the section
+- [ ] **Writing / blog** — _(still open)_ No blog pages exist yet and the only post
+      (`rebuilding-in-astro.mdx`) is a `draft: true` placeholder. Needs real copy from Chris first.
+      Add `@astrojs/rss` when the first post ships. Original note: MDX posts in a `blog` content collection. Seed with 1 post so the section
       isn't empty (e.g. "rebuilding my site in Astro").
 - [x] **Interests section** — DONE (2026-11-11). Map gallery on the homepage: NYC Neighbourhood Map,
       Amtrak Network Atlas, HS2 Phase One Structures, each a static image linking to the live
       artifact with a caption and data credit. The `/interests` subpage was removed. Swap in a new
       Amtrak thumbnail once its label overlaps are fixed.
-- [ ] **Links / contact** — GitHub, LinkedIn (as the CV link), email. Update from `data/links.tsx`:
+- [x] **Links / contact** — DONE. Footer has GitHub, LinkedIn, Email and CV (`/cv.pdf`, rebuilt
+      with `pnpm cv`). Original note: GitHub, LinkedIn (as the CV link), email. Update from `data/links.tsx`:
       verify the Twitter/X handle and email are current.
-- [ ] **Project data model** — projects as content-collection entries (MDX) or a typed data file.
+- [x] **Project data model** — DONE, content collection. Original note: projects as content-collection entries (MDX) or a typed data file.
       Lean toward content collection for consistency with blog.
 - [x] **GitHub commit grid** — DROPPED (2026-11-11). It showed placeholder data and Chris doesn't
       want a commit grid on the site. `CommitGrid.astro` deleted.
-- [ ] **Projects: name and explain them** — rename `sport-project` to Almanac; give Almanac and HN
+- [x] **Projects: name and explain them** — DONE (2026-11-13). Original note: rename `sport-project` to Almanac; give Almanac and HN
       Monthly Top a short page explaining the idea plus links to the live site and repo. Needs
       Almanac's one-liner and live URL from Chris. HN Monthly Top is offline until Chris migrates it.
-- [ ] **GitHub profile tidy-up** _(parked)_ — the profile README is empty; pins show an archived
+- [x] **GitHub profile tidy-up** — DONE (2026-11-12). README written, pins re-picked. Original note: the profile README is empty; pins show an archived
       template and a contributed repo. Write a short README linking to ctaylor.dev, re-pick pins
       (public repos only), and decide whether the email stays public.
 
@@ -138,7 +141,7 @@ All legacy Next.js files deleted wholesale in one sweep:
 - [x] **Linked repo to Vercel** — `chris-taylors-projects-c1cc6447/website` (the existing project).
 - [x] **Fixed framework preset** — project was still set to **Next.js** from 2021. Added `vercel.json`
       with `"framework": "astro"` (committed config overrides the stale dashboard preset).
-- [ ] **Verify a real deploy** — confirm a push to `main` builds + serves correctly on Vercel.
+- [x] **Verify a real deploy** — confirm a push to `main` builds + serves correctly on Vercel.
 - [x] **Point `ctaylor.dev` at the project** once the domain is purchased.
 
 ### 4. Documentation
@@ -148,8 +151,7 @@ All legacy Next.js files deleted wholesale in one sweep:
 - [x] **Reconcile CLAUDE.md** — rewritten for Astro 6, `ctaylor.dev` and the `career` collection, with
       `.claude/rules/`, `.mcp.json`, skills, `pnpm verify` and CI added (Almanac-style tooling).
       Changes now ship straight to `main` with no PR (2026-11-11).
-- [ ] **Write README.md** — what the site is, how to run (`pnpm dev`), how to deploy.
-- [ ] **Document the content model** — the frontmatter shape for `projects` and `blog` so entries are
+- [x] **Document the content model** — DONE in `.claude/rules/content-model.md`. the frontmatter shape for `projects` and `blog` so entries are
       trivial to add.
 
 ---
